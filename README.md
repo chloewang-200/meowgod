@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Cat Animation Setup
+
+For the cat animation to work properly, you need to add a sprite sheet image:
+
+1. Create or obtain a sprite sheet image named `cat_tiles.png`
+2. Place it in the `src/assets/` directory
+3. The sprite sheet should contain:
+   - Walking animation frames horizontally at position 0,0
+   - Sitting animation frames at position -400px,0
+
+The animations are configured to work with specific sprite sheet dimensions:
+- Walking animation: 12 frames vertically aligned (total height: 2391px)
+- Sitting animation: 6 frames vertically aligned starting at x-position 400px (total height: 1200px)
+
+If your sprite sheet has different dimensions, update the CSS in `src/Cat.css` accordingly.
