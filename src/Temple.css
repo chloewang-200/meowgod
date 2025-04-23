@@ -1,0 +1,53 @@
+.temple-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.temple-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.fountain {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 20vh;
+  z-index: 2;
+}
+
+.gods {
+  position: absolute;
+  top: 51%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 3vw;
+  z-index: 3;
+}
+
+.gods img {
+  height: 58vh;
+  width: auto;
+}
+
+.side-god {
+  margin-top: 15vh; /* move side gods lower */
+}
+.god img:hover,
+.side-god img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px rgb(255, 226, 130));
+}
+
+.fountain:hover {
+  transform: translateX(-50%) scale(1.2);
+}
