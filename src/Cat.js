@@ -3,9 +3,15 @@ import './Cat.css';
 import bgImage from './assets/landscape_long.png';
 import catTiles from './assets/cat_tiles.png';
 import templeImg from './assets/temple.png';
+import catWorm from './assets/cat_worm.png';
+import catWormSingle from './assets/tiger_worm_single.png';
+import LoginBox from './components/LoginBox';
 
 const Cat = () => {
   const [isSitting, setIsSitting] = useState(false);
+  const [showWorm, setShowWorm] = useState(false);
+  const [tigerClicked, setTigerClicked] = useState(false);
+
 
   const handleAnimationEnd = () => {
     console.log("🌄 Background finished scrolling");
@@ -20,8 +26,13 @@ const Cat = () => {
         onAnimationEnd={handleAnimationEnd}
         style={{ backgroundImage: `url(${bgImage})` }}
       >
-        <div className="temple" onClick={() => window.location.href = '/temple'} >
-        <img src={templeImg} alt="Temple" style={{ width: '100%', height: '100%' }} />
+        <div className="temple" onClick={() => {
+          setShowWorm(true);
+          // setTimeout(() => {
+          //     window.location.href = '/temple';
+          //   }, 1000); // matches animation duration
+          }}>
+          <img src={templeImg} alt="Temple" style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
       
@@ -38,6 +49,27 @@ const Cat = () => {
           }
         }}
       ></div>
+      {showWorm && (
+          <div>
+            <div className="worm">
+              <img src={catWorm} alt="Worm" />
+            </div>
+
+            <div
+              className={`tiger-worm ${tigerClicked ? 'tiger-ascend' : 'tiger-hover'}`}
+              onClick={() => setTigerClicked(true)}
+            >
+              <img src={catWormSingle} alt="Tiger Worm" />
+            </div>
+
+            {tigerClicked && (
+              <div className="login-container">
+                <LoginBox />
+              </div>
+            )}
+          </div>
+        )}
+
 
     </div>
   );

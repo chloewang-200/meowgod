@@ -27,7 +27,7 @@ html, body, #root {
 
 .temple {
   position: absolute;
-  bottom: -4vh;
+  bottom: 0vh;
   left: 114vw;
   width: 8.5%;
   height: auto;
@@ -39,7 +39,7 @@ html, body, #root {
 
 
 .temple:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 
@@ -53,6 +53,74 @@ html, body, #root {
   background: url("./assets/cat_tiles.png") 0 0 no-repeat;
   transform: scaleX(-1);
 }
+.worm {
+  position: fixed;
+  top: -200px; /* start above screen */
+  left: 50%;   /* center horizontally */
+  transform: translateX(-50%); /* adjust for image width */
+  z-index: 2;
+  animation: drop-worm 1s ease forwards;
+}
+
+.login-container {
+  z-index: 998;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.worm img {
+  width: 510vh;
+  height: auto;
+}
+
+.tiger-worm {
+  position: fixed;
+  top: -200px; /* start above screen */
+  left: 50%;   /* center horizontally */
+  transform: translateX(-50%); /* adjust for image width */
+  z-index: 999;
+  animation: drop-worm 1s ease forwards;
+  pointer-events: none;
+}
+
+.tiger-worm img {
+  width: 130vh;
+  height: auto;
+  pointer-events: auto; /* BUT allows hover/click on visible image */
+}
+
+
+/* 🔥 Glow + scale in place */
+.tiger-worm:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.tiger-ascend {
+  animation: rise-up 1s ease forwards;
+}
+@keyframes rise-up {
+  0% {
+    top: -80%;
+    transform: translateX(-50%) scale(1.05);
+  }
+  100% {
+    top: -120%; /* move upward gradually */
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+@keyframes drop-worm {
+  from {
+    top: -200%;
+    opacity: 0;
+  }
+  to {
+    top: -80%; /* drops to vertical center */
+    opacity: 1;
+  }
+}
+
 
 .move {
   animation: move-animation 6s linear 1;
