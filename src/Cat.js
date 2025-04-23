@@ -11,6 +11,9 @@ const Cat = () => {
   const [isSitting, setIsSitting] = useState(false);
   const [showWorm, setShowWorm] = useState(false);
   const [tigerClicked, setTigerClicked] = useState(false);
+  const [startExit, setStartExit] = useState(false);
+  const [hideScene, setHideScene] = useState(false);
+
 
 
   const handleAnimationEnd = () => {
@@ -21,7 +24,9 @@ const Cat = () => {
   
   return (
     <div className="container">
-      <div
+      {!hideScene && ( 
+        <>
+        <div
         className="background-scroll"
         onAnimationEnd={handleAnimationEnd}
         style={{ backgroundImage: `url(${bgImage})` }}
@@ -35,7 +40,7 @@ const Cat = () => {
           <img src={templeImg} alt="Temple" style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
-      
+     
 
      <div
         className={`cat ${!done ? 'walk-then-sit' : ''}`}
@@ -49,14 +54,15 @@ const Cat = () => {
           }
         }}
       ></div>
+        </>
+              )}
       {showWorm && (
           <div>
-            <div className="worm">
-              <img src={catWorm} alt="Worm" />
-            </div>
-
+           <div className={`worm ${startExit ? 'worm-exit' : ''}`}>
+            <img src={catWorm} alt="Worm" />
+          </div>
             <div
-              className={`tiger-worm ${tigerClicked ? 'tiger-ascend' : 'tiger-hover'}`}
+              className={`tiger-worm ${tigerClicked ? 'tiger-ascend' : ''} ${startExit ? 'tiger-exit' : ''}`}
               onClick={() => setTigerClicked(true)}
             >
               <img src={catWormSingle} alt="Tiger Worm" />
@@ -64,7 +70,14 @@ const Cat = () => {
 
             {tigerClicked && (
               <div className="login-container">
-                <LoginBox />
+                <LoginBox onLoginSuccess={() => {
+                  setTigerClicked(false);
+                  setHideScene(true);    
+                  setStartExit(true);
+                  setTimeout(() => {
+                  window.location.href = '/temple';
+                  }, 500); // matches animation time
+                }} />
               </div>
             )}
           </div>
