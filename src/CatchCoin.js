@@ -37,6 +37,7 @@ export default function CoinWithCat() {
     const [coinFrozen, setCoinFrozen] = useState(false);
     const [lockedHandPos, setLockedHandPos] = useState(null);
     const [enterTemple, setEnterTemple] = useState(false);
+    const [pressRightArrow, setPressRightArrow] = useState(false);
     const handStyle = {
       position: 'fixed',
       left: (lockedHandPos || mousePos).x,
@@ -189,6 +190,7 @@ export default function CoinWithCat() {
         const handleKeyDown = (e) => {
           if (e.key === 'ArrowRight') {
             setIsWalking(true);
+            setPressRightArrow(true);
           }
         };
       
@@ -746,6 +748,7 @@ But beware: the Veiled Cat does not bless the careless. Only those who offer tri
   {enterTemple && (<Cat />)}
   {(showFlyingCoin || coinDropped) && !scrolled && <span className="letter">w</span>}
   {showWalkingCat && (
+    <div>
   <motion.img
     key={catPose === catWizard ? 'run' : 'stand'} // 👈 Force React to rerender
     src={catPose}
@@ -756,8 +759,23 @@ But beware: the Veiled Cat does not bless the careless. Only those who offer tri
       transition: 'transform 0.05s linear',
       transform: catExiting ? 'scaleX(-1)' : 'scaleX(1)',
     }}
-  />
-)}
+    />
+    {!pressRightArrow && (<div><h1 style={
+  {
+  position: 'absolute',
+  fontSize: '2.5vw', 
+  color: 'white', 
+  top: '30vh',
+  left: '20vw',
+  rotate: '0deg',
+  transform: 'translate(-50%, -50%)',
+  fontFamily: "Caveat", 
+  fontWeight: 'bold', 
+  textAlign: 'center', 
+  whiteSpace: 'nowrap', 
+  zIndex: 1000}}>Try pressing the right arrow key!</h1></div>)}
+    </div>
+  )}
 
 </div>
 
