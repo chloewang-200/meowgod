@@ -1,0 +1,414 @@
+.wheel-page-container {
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow-y: auto; /* Make it scrollable */
+    overflow-x: hidden;
+    background: linear-gradient(
+      45deg,
+      #9C8669,
+      #c68960,
+      #152468,
+      #152468,
+      #c68960,
+      #9C8669
+    );
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    overflow: hidden;
+}
+  .wheel-page-container::before {
+    content: '';
+    position: fixed; 
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    padding: 20;
+    margin: 20;
+    background: radial-gradient(
+      circle,
+      rgb(255, 0, 0) 1.25px,
+      transparent 1px
+    );
+    background-size: 30px 30px;
+    animation: stars 20s linear infinite;
+    z-index: 0;
+    pointer-events:none;
+  }
+
+  @keyframes stars {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .wheel-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 150px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+  
+  .wheel-wrapper {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1); 
+  }
+
+
+.wheel-section {
+    position: relative;
+    width: 800px;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px auto;
+  }
+  
+  h1 {
+    margin: 20px 0 40px 0; /* Adjusted margin */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                 0 0 20px rgba(255, 255, 255, 0.3),
+                 0 0 30px rgba(255, 255, 255, 0.2);
+    animation: titleGlow 2s ease-in-out infinite alternate;
+  }
+  
+  /* Make the page responsive */
+  @media (max-height: 800px) {
+    .wheel-content {
+      padding-top: 20px;
+      justify-content: flex-start;
+    }
+  
+    h1 {
+      margin: 10px 0 20px 0;
+    }
+  }
+  
+  /* Ensure the wheel is responsive on smaller screens */
+  @media (max-width: 600px) {
+    .wheel-wrapper {
+      transform: scale(0.8);
+    }
+  }
+  
+  /* Rest of your existing animations remain the same */
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  
+  @keyframes titleGlow {
+    from {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                   0 0 20px rgba(255, 255, 255, 0.3),
+                   0 0 30px rgba(255, 255, 255, 0.2);
+    }
+    to {
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
+                   0 0 30px rgba(255, 255, 255, 0.4),
+                   0 0 40px rgba(255, 255, 255, 0.3);
+    }
+  }
+
+.wheel-header {
+  position: absolute;
+  top: 0;
+  transform: translateX(-35%) translateY(-30%); 
+  flex-direction: column;
+  align-items: center;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  transition: transform 0.3s ease;
+  margin: 0; /* Remove margins */
+  padding: 0; /* Remove padding */
+  z-index: 1;
+  scale: 1.4;
+}
+
+.wheel-header:hover {
+  filter: drop-shadow(0 0 20px rgba(248, 239, 214, 0.8));
+}
+
+.prize-display {
+  position: absolute;
+  top: 0;
+  left: 41.5%;
+  transform: translateX(0%) translateY(100%);
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 215, 0, 0.1);
+  border-radius: 50px;
+  backdrop-filter: blur(5px);
+  animation: prizeAppear 0.5s ease-out;
+  z-index: 2;
+}
+
+.prize-display h2 {
+  margin: 0;
+  font-size: 1.4em;
+  color: #950000;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes prizeAppear {
+  from {
+    opacity: 0;
+    transform: translateX(0) translateY(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(70px);
+  }
+}
+
+/* Optional: Add a glowing effect when prize is displayed */
+.prize-display {
+  box-shadow: 0 0 20px rgba(255, 213, 0, 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+.prize-text {
+  font-size: 1em;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+  font-weight: bold;
+  color: #F8EFD6; /* Gold text color */
+  border-radius: 15px;
+  display: block;
+}
+
+.prize-display:hover {
+    box-shadow: 0 0 40px rgba(255, 213, 0, 1);
+}
+
+.side-image {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 1.6;
+  z-index: 1;
+}
+
+.side-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.side-image img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+}
+
+.left-top {
+  top: 80px;
+  left: 20px;
+}
+
+.right-top {
+  top: 80px;
+  left: 520px;
+}
+
+.left-bottom {
+  bottom: 100px;
+  left: 20px;
+}
+
+.right-bottom {
+  bottom: 100px;
+  right: 20px;
+}
+
+.tree-hill-left-bottom {
+    position: absolute;
+    bottom: -150px;
+    left: -450px;
+    transform: rotate(31deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    scale: 1.2;
+    filter: drop-shadow(0 0 10px rgba(248, 239, 214, 0.3));
+}
+
+.tree-hill-left-bottom :hover {
+    filter: drop-shadow(0 0 20px rgba(248, 239, 214, 0.8));
+}
+
+.tree-hill-right-bottom {
+    position: absolute;
+    bottom: -150px;
+    right: -450px;
+    transform: rotate(-31deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    scale: 1.2;
+    filter: drop-shadow(0 0 10px rgba(248, 239, 214, 0.3));
+}
+
+.tree-hill-right-bottom :hover {
+    filter: drop-shadow(0 0 20px rgba(248, 239, 214, 0.8));
+}
+
+
+/* Animation for side images */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.side-image {
+  animation: float 3s ease-in-out infinite;
+}
+
+.left-top { animation-delay: 0s; }
+.right-top { animation-delay: 0.75s; }
+.left-bottom { animation-delay: 1.5s; }
+.right-bottom { animation-delay: 2.25s; }
+
+.limit-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.limit-alert {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  backdrop-filter: blur(5px);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 30px #EA7348;
+  animation: slideIn 0.5s ease;
+}
+
+.limit-alert-content {
+  color: white;
+}
+
+.limit-alert h2 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #F8EFD6;
+}
+
+.limit-alert p {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  opacity: 0.9;
+  color: #F8EFD6;
+}
+
+.close-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  color: #F8EFD6;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Add shake animation for the alert */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.limit-alert {
+  animation: slideIn 0.5s ease, shake 0.5s ease 0.5s;
+}

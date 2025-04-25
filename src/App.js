@@ -9,6 +9,8 @@ import MainGodPage from './TemplePages/MainGodPage';
 import NFTPage from './TemplePages/NFTPage';
 import EvilPage from './TemplePages/EvilPage';
 import FountainPage from './TemplePages/FountainPage';
+import WheelPage from './TemplePages/WheelPage'; 
+import SlotMachinePage from './TemplePages/SlotMachinePage';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/nft" element={<ProtectedRoute><NFTPage /></ProtectedRoute>} />
           <Route path="/evil" element={<ProtectedRoute><EvilPage /></ProtectedRoute>} />
           <Route path="/fountain" element={<ProtectedRoute><FountainPage /></ProtectedRoute>} />
+          <Route path="/wheel" element={<ProtectedRoute><WheelPage /></ProtectedRoute>} />
+          <Route path="/Slot" element={<ProtectedRoute><SlotMachinePage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

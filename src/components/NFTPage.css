@@ -1,0 +1,137 @@
+.nft-page-container {
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow-y: auto; /* Make it scrollable */
+    overflow-x: hidden;
+    background: linear-gradient(
+        45deg,
+        #ff4db2cf,
+        #161F63,
+        #161F63,
+        #ff4db294
+    );
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    overflow: hidden;
+}
+
+.navigation-container {
+    margin-top: 2rem;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Add some hover effects for interactive elements */
+.navigation-container a {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navigation-container a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.nft-god {
+    position: absolute;
+    top: -20%;
+    left: 37%;
+    align-items: center;
+    scale: 0.6;
+    filter: drop-shadow(0 0 10px rgba(248, 239, 214, 0.8));
+    z-index: 2;
+    animation: floatgod 4s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+    .nft-god {
+        scale: 0.4;
+    }
+}
+
+@media (max-width: 480px) {
+    .nft-god {
+        scale: 0.3;
+    }
+}
+
+/* Animation for side images */
+@keyframes floatgod {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-25px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+
+.nft-cat {
+    position: absolute;
+    scale: 0.6;
+    transition: filter 0.1s ease;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px rgb(248, 239, 214, 0.5));
+}
+
+.nft-cat:hover {
+    filter: drop-shadow(0 0 20px rgb(248, 239, 214));
+    scale: 0.7;
+}
+
+.nft-cat-container a {
+    display: contents;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.left-cat {
+    position: absolute;
+    left: 300px;
+    bottom: 425px;
+}
+
+.right-cat {
+    position: absolute;
+    right: 300px;
+    bottom: 400px;
+}
+
+
+.nft-decor {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scale: 0.6;
+    filter: drop-shadow(0 0 20px rgba(248, 239, 214, 0.5));
+    z-index: 2;
+    bottom: -250px;
+}
+
+.left-nft {    
+    left: -270px;
+}
+
+.right-nft {
+    right: -275px;
+}
