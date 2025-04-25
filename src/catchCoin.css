@@ -1,0 +1,81 @@
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #950000;
+    overflow: hidden;
+  }
+  
+
+.coin-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: url(https://cur.cursors-4u.net/cursors/cur-9/cur826.cur), auto;
+  }
+  
+.coin-draggable {
+    width: 15vw;
+    height: auto;
+    /* cursor: grab; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    z-index: 10;
+  }
+
+.cat-squat {
+  pointer-events: none;
+  user-select: none;
+  
+}
+
+.mew-text {
+  margin-top: -30vh;
+  top: 0;
+  font-size: 10vw;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  color: white;
+  font-family: 'Major Mono Display', monospace;
+}
+  
+.letter {
+  display: inline-block;
+  position: relative;
+}
+  
+.o-placeholder {
+  width: 15vw;
+  height: 15vw;
+  position: relative;
+}
+  
+.coin-o {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+
+.cat-walking {
+    position: absolute;
+    bottom: 0;         /* Visible near the bottom */
+    left: -20vh;              /* Will be overridden dynamically via inline style */
+    width: 20vw;          /* Responsive size */
+    height: auto;
+    z-index: 102;         /* On top of background and coin */
+    pointer-events: none; /* So it doesn’t interfere with interaction */
+    user-select: none;
+  }
+  
