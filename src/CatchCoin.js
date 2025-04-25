@@ -13,6 +13,8 @@ import { splitText } from "motion-plus"
 import godLucky from './assets/god_cat_lucky.png';
 import handCursor from './assets/hand.png';
 import Cat from './Cat';
+import TempleEntry from './TempleEntry';
+
 export default function CoinWithCat() {
     const [coinDropped, setCoinDropped] = useState(false);
     const [origin, setOrigin] = useState({ x: 0, y: 0 });
@@ -745,7 +747,7 @@ But beware: the Veiled Cat does not bless the careless. Only those who offer tri
 
 
   </div>
-  {enterTemple && (<Cat />)}
+  {enterTemple && (<TempleEntry />)}
   {(showFlyingCoin || coinDropped) && !scrolled && <span className="letter">w</span>}
   {showWalkingCat && (
     <div>
