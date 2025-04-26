@@ -88,6 +88,99 @@
   pointer-events: none; /* Ensure clicks go through to the candle */
 }
 
+.incense-smoke {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 180px;
+  z-index: 4;
+  opacity: 0.8;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.smoke-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(1px);
+  transform-origin: bottom center;
+  opacity: 0;
+  animation: smoke-wisp 10s ease-out infinite;
+}
+
+.smoke-line::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(255, 255, 255, 0.3) 40%,
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 80%
+  );
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,0 Q70,50 40,100 Q20,150 60,200 Q90,250 50,300' stroke='white' stroke-width='8' fill='none' /%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,0 Q70,50 40,100 Q20,150 60,200 Q90,250 50,300' stroke='white' stroke-width='8' fill='none' /%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+}
+
+.smoke-line:nth-child(2) {
+  animation-delay: 1.5s;
+  animation-duration: 12s;
+  width: 120%;
+  left: -10%;
+}
+
+.smoke-line:nth-child(2)::before {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,0 Q30,50 60,100 Q80,150 40,200 Q10,250 50,300' stroke='white' stroke-width='8' fill='none' /%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,0 Q30,50 60,100 Q80,150 40,200 Q10,250 50,300' stroke='white' stroke-width='8' fill='none' /%3E%3C/svg%3E");
+}
+
+.smoke-line:nth-child(3) {
+  animation-delay: 3s;
+  animation-duration: 11s;
+  width: 90%;
+  left: 5%;
+}
+
+.smoke-line:nth-child(3)::before {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,0 Q60,50 30,100 Q45,150 60,200 Q30,250 50,300' stroke='white' stroke-width='7' fill='none' /%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,0 Q60,50 30,100 Q45,150 60,200 Q30,250 50,300' stroke='white' stroke-width='7' fill='none' /%3E%3C/svg%3E");
+}
+
+@keyframes smoke-wisp {
+  0% {
+    opacity: 0;
+    transform: scaleY(0) translateY(0);
+  }
+  5% {
+    opacity: 0.7;
+  }
+  30% {
+    opacity: 0.5;
+  }
+  70% {
+    opacity: 0.3;
+    transform: scaleY(0.7) translateY(-20px) rotate(2deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1) translateY(-40px) rotate(-2deg);
+  }
+}
+
 .flame {
   position: relative;
   width: 25px;

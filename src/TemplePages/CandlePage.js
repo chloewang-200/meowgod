@@ -42,6 +42,11 @@ const CandlePage = () => {
             {isLit && (
               <div className="flame-container">
                 <div className="flame"></div>
+                <div className="incense-smoke">
+                  <div className="smoke-line"></div>
+                  <div className="smoke-line"></div>
+                  <div className="smoke-line"></div>
+                </div>
               </div>
             )}
           </div>
