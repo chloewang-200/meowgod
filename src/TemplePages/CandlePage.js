@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import altarBg from '../assets/altar/altar_bg.png';
 import candleImg from '../assets/altar/candle.png';
 import '../TemplePages/CandleStyles.css';
 
 const CandlePage = () => {
   const [isLit, setIsLit] = useState(false);
+  const maskRef = useRef(null);
 
   // Force any body/html styling to allow full height
   useEffect(() => {
@@ -23,14 +24,34 @@ const CandlePage = () => {
     };
   }, []);
 
+  // Subtle flame flicker effect that affects the light mask
+  useEffect(() => {
+    if (isLit && maskRef.current) {
+      const flickerEffect = () => {
+        // Random intensity between 0.9 and 1.05
+        const intensity = 0.9 + (Math.random() * 0.15);
+        maskRef.current.style.opacity = intensity;
+      };
+      
+      const flickerInterval = setInterval(flickerEffect, 200);
+      return () => clearInterval(flickerInterval);
+    }
+  }, [isLit]);
+
   const toggleCandle = () => {
     setIsLit(!isLit);
   };
 
   return (
-    <div className="candle-altar">
+    <div className={`candle-altar ${isLit ? 'altar-lit' : 'altar-dark'}`}>
       <div className="altar-container">
         <img src={altarBg} alt="Altar Background" className="altar-background" />
+        {isLit && (
+          <div 
+            ref={maskRef}
+            className="candle-light-mask candle-light-active"
+          ></div>
+        )}
         
         <div className={`candle-container ${isLit ? 'lit' : ''}`} onClick={toggleCandle}>
           <div className="candle-wrapper">
@@ -50,7 +71,6 @@ const CandlePage = () => {
               </div>
             )}
           </div>
-          {isLit && <div className="glow-effect glow-active"></div>}
         </div>
       </div>
     </div>
