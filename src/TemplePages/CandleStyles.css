@@ -94,6 +94,23 @@
          drop-shadow(-6px 0 12px rgba(255, 255, 255, 0.15));
 }
 
+/* Make unlit candle darker */
+.candle-container .candle-image {
+  filter: brightness(0.85) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+  transition: filter 0.8s ease;
+}
+
+/* Brighten candle when lit */
+.candle-container.lit .candle-image {
+  filter: brightness(1) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+.candle-container:hover .candle-image {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)) 
+         drop-shadow(4px 0 8px rgba(255, 255, 255, 0.2)) 
+         drop-shadow(-4px 0 8px rgba(255, 255, 255, 0.2));
+}
+
 .candle-wrapper {
   position: relative;
   width: 100%;
@@ -109,12 +126,6 @@
   z-index: 2;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
   transition: filter 0.3s ease;
-}
-
-.candle-container:hover .candle-image {
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2)) 
-         drop-shadow(4px 0 8px rgba(255, 255, 255, 0.2)) 
-         drop-shadow(-4px 0 8px rgba(255, 255, 255, 0.2));
 }
 
 .flame-container {
