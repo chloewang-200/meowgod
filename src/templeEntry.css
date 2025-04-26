@@ -1,0 +1,223 @@
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background-color: #950000;
+  }
+  
+  .container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .background-scroll {
+    position: absolute;
+    top: 0;
+    left: -45vw;
+    width: 500vw; /* Make super wide */
+    height: 100vh;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    background-position: top left;
+    z-index: 0;
+    /* animation: scroll-bg 5s linear forwards; */
+  }
+  
+  .temple {
+    position: absolute;
+    bottom: -10vh;
+    left: 100vw;
+    width: 8.5%;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s;
+  }
+  
+  
+  .temple:hover {
+    transform: scale(1.05);
+  }
+  
+  
+  .cat {
+    position: absolute;
+    bottom: 10px;
+    left: 100px;
+    width: 400px;
+    height: 200px;
+    z-index: 2;
+    background: url("./assets/cat_tiles.png") 0 0 no-repeat;
+    transform: scaleX(-1);
+  }
+  .worm {
+    position: fixed;
+    top: -200px; /* start above screen */
+    left: 50%;   /* center horizontally */
+    transform: translateX(-50%); /* adjust for image width */
+    z-index: 2;
+    animation: drop-worm 1s ease forwards;
+  }
+  
+  .login-container {
+    z-index: 998;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .worm img {
+    width: 510vh;
+    height: auto;
+  }
+  
+  .tiger-worm {
+    position: fixed;
+    top: -200px; /* start above screen */
+    left: 50%;   /* center horizontally */
+    transform: translateX(-50%); /* adjust for image width */
+    z-index: 999;
+    animation: drop-worm 1s ease forwards;
+    pointer-events: none;
+  }
+  
+  .tiger-worm img {
+    width: 130vh;
+    height: auto;
+    pointer-events: auto; /* BUT allows hover/click on visible image */
+  }
+  
+  
+  /* 🔥 Glow + scale in place */
+  .tiger-worm:hover {
+    transform: translateX(-50%) scale(1.05);
+  }
+  
+  .tiger-ascend {
+    animation: rise-up 1s ease forwards;
+  }
+  @keyframes rise-up {
+    0% {
+      top: -80%;
+      transform: translateX(-50%) scale(1.05);
+    }
+    100% {
+      top: -120%; /* move upward gradually */
+      transform: translateX(-50%) scale(1.05);
+    }
+  }
+  
+  @keyframes drop-worm {
+    from {
+      top: -200%;
+      opacity: 0;
+    }
+    to {
+      top: -80%; /* drops to vertical center */
+      opacity: 1;
+    }
+  }
+  
+  @keyframes drop-back-down {
+    from {
+      top: -80%;
+      opacity: 1;
+    }
+    to {
+      top: 120%;
+      opacity: 0;
+    }
+  }
+  
+  .worm-exit {
+    animation: drop-back-down 1.5s ease forwards;
+  }
+  
+  .tiger-exit {
+    animation: drop-back-down 1.5s ease forwards;
+  }
+  
+  
+  .move {
+    animation: move-animation 6s linear 1;
+  }
+  
+  .walking {
+    animation: walk-animation 1s steps(12) infinite;
+    background: url("./assets/cat_tiles.png") 0 0 no-repeat;
+  }
+  
+  .sitting {
+    animation: sit-animation 2s steps(6) 1 forwards;
+    background: url("./assets/cat_tiles.png") 0 0 no-repeat;
+  }
+  
+  .walk-then-sit {
+    animation: 
+      walk-animation 4s steps(12) 1 forwards, 
+      sit-animation 2s 4s steps(6) 1 forwards;
+    background: url("./assets/cat_tiles.png") 0 0 no-repeat;
+    animation-fill-mode: forwards;
+  }
+  
+  
+  @keyframes walk-animation {
+    from { background-position: 0 0; }
+    to { background-position: 0 -2391px; }
+  }
+  
+  @keyframes sit-animation {
+    from { background-position: -400px 0; }
+    to   { background-position: -400px -1000px; } /* 5 steps → 6 frames */
+  }
+  @keyframes sit-idle {
+    0%, 100% {
+      background-position: -400px -1000px; /* frame 5 */
+    }
+    50% {
+      background-position: -400px -1200px; /* frame 6 */
+    }
+  }
+  
+  @keyframes walk-animation {
+    from { background-position: 0 0; }
+    to   { background-position: 0 -2391px; } /* 12 frames * 199.25px or 200px */
+  }
+  
+  @keyframes sit-animation {
+    from { background-position: -400px 0; }
+    to   { background-position: -400px -1200px; } /* 6 frames * 200px */
+  }
+  
+  
+  @keyframes move-animation {
+    from {
+      left: 100%;
+    }
+  
+    to {
+      left: -400px;
+    }
+  }
+  
+  /* @keyframes sit-animation {
+    from {
+      background-position: -400px 0;
+    }
+  
+    to {
+      background-position: -400px -1200px;
+    }
+  }  */
+  @keyframes scroll-bg {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-70vw);
+    }
+  }

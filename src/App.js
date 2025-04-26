@@ -11,12 +11,15 @@ import EvilPage from './TemplePages/EvilPage';
 import FountainPage from './TemplePages/FountainPage';
 import WheelPage from './TemplePages/WheelPage'; 
 import SlotMachinePage from './TemplePages/SlotMachinePage';
+import CatchCoin from './CatchCoin';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Cat />} />
+          {/* <Route path="/" element={<CatchCoin />} /> */}
+          {/* <Route path="/" element={<Cat />} /> */}
+          <Route path="/" element={<CatchCoin />} />
           <Route path="/temple" element={<ProtectedRoute><Temple /></ProtectedRoute>} />
           <Route path="/money" element={<ProtectedRoute><MoneyPage /></ProtectedRoute>} />
           <Route path="/money2" element={<ProtectedRoute><MoneyPage /></ProtectedRoute>} />
