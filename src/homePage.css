@@ -20,6 +20,20 @@
   position: relative;
 }
 
+.background-entry {
+  background-image: url('./assets/entry_background.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(100%);
+  position: relative;
+  transition: filter 1s ease;
+}
+
+.background-entry.saturated {
+  filter: grayscale(0%); /* 🌈 full color */
+}
+
 .tiger-wrapper {
   position: absolute;
   top: 55%;
@@ -56,6 +70,7 @@
   width: 13.5vw;        /* Adjust percentage to your preference */
   height: auto;       /* Keep aspect ratio */
   z-index: 2;
+  filter: grayscale(0%) !important;
 }
 
 .coin-image:hover {
@@ -126,6 +141,8 @@
   color: white;
 }
 
+
+
 .dog-god-image {
   position: absolute;
   max-width: 80%;
@@ -133,5 +150,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Move back half width and half height */
+  z-index: 999;
+}
+
+.circle {
+  position: absolute;
+  top: 38%;
+  left: 48.5%;
+  transform: translate(-50%, -50%);
+  width: 8vw;     /* width = height */
+  height: 8vw;
+  border-radius: 50%;   /* THIS makes it a circle */
+  background-color: transparent;
   z-index: 999;
 }

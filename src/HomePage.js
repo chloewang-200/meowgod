@@ -8,6 +8,9 @@ import TigerEyes from './TigerEyes';
 import MainGod from './assets/main_god.png';
 import EvilGod from './assets/evil_god.png';
 import DogGod from './assets/dog_god.png';
+import Hand from './assets/human_hand.png';
+import TempleEntry from './TempleEntry2.js'
+
 const HomePage = () => {
   const [moveCoinToCenter, setMoveCoinToCenter] = useState(false);
   const [startSpinning, setStartSpinning] = useState(false);
@@ -18,6 +21,14 @@ const HomePage = () => {
   const [moveCoinToTopLeft, setMoveCoinToTopLeft] = useState(false);
   const [showEvilGod, setShowEvilGod] = useState(false);
   const [moveCoinToMiddleAgain, setMoveCoinToMiddleAgain] = useState(false);
+  const [allGodsFinished, setAllGodsFinished] = useState(false);
+  const [showHand, setShowHand] = useState(false);
+  const [lockedHandPos, setLockedHandPos] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isDraggingWithHand, setIsDraggingWithHand] = useState(false);
+  const [showEntryBackground, setShowEntryBackground] = useState(false);
+  const [isSaturated, setIsSaturated] = useState(false);
+  const [goToTemple, setGoToTemple] = useState(false);
 
   const handleBackgroundClick = () => {
     if (moveToCornerFinished) {
@@ -26,6 +37,24 @@ const HomePage = () => {
     if (showEvilGod) {
       setMoveCoinToMiddleAgain(true);
     }
+    if (moveCoinToMiddleAgain) {
+      setAllGodsFinished(true);
+    }
+  };
+
+  const handleOpenTemple = () => {
+    setIsSaturated(true);
+    console.log('open temple');
+  };
+
+  const handStyle = {
+    position: 'fixed',
+    left: (lockedHandPos || mousePos).x,
+    top: (lockedHandPos || mousePos).y,
+    transform: 'translate(-50%, -50%)',
+    width: '45vw',
+    pointerEvents: 'none',
+    zIndex: 99,
   };
   
 
@@ -73,6 +102,13 @@ const HomePage = () => {
     }
   }, [currentSentenceIndex]);
   
+  useEffect(() => {
+    if (!allGodsFinished) { return; }
+    const allGodsTimer = setTimeout(() => {
+      setShowHand(true);
+    }, 1500);
+    return () => clearTimeout(allGodsTimer);
+  }, [allGodsFinished]);
   
   useEffect(() => {
     if (moveToCornerFinished) {
@@ -94,7 +130,24 @@ const HomePage = () => {
       return () => clearTimeout(evilGodTimer);
     }
   }, [moveCoinToTopLeft]);
-  
+
+  useEffect(() => {
+    if (!isSaturated) { return; }
+    const entryTimer = setTimeout(() => {
+      setGoToTemple(true);
+      console.log('go to temple');
+    }, 1500);
+    return () => clearTimeout(entryTimer);
+  }, [isSaturated]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
 
   const handleDragEnd = () => {
     setMoveCoinToCenter(true); // start moving coin to center
@@ -119,15 +172,25 @@ const HomePage = () => {
     }
   };
   
+  useEffect(() => {
+    if (!showHand) { return; }
+    const entryBackgroundTimer = setTimeout(() => {
+      setShowEntryBackground(true);
+    }, 1500);
+    return () => clearTimeout(entryBackgroundTimer);
+  }, [isDraggingWithHand]);
   
   return (
-    <div className={`homepage-container ${moveCoinToCenter ? 'background-changed' : ''}`} onClick={handleBackgroundClick}>
+    <div className={`homepage-container 
+      ${showEntryBackground ? (isSaturated ? 'background-entry saturated' : 'background-entry') 
+      : moveCoinToCenter ? 'background-changed' : ''}`
+    } onClick={handleBackgroundClick}>
       <div className="tiger-wrapper" >
         <img src={Tiger_top} alt="Tiger_top" className="tiger-top-image" style={{ display: moveCoinToCenter ? 'none' : 'block' }} />
         <div className="tiger-eyes-wrapper" style={{ display: moveCoinToCenter ? 'none' : 'block' }}>
           <TigerEyes />
         </div>
-         {moveCoinToMiddleAgain && (
+         {moveCoinToMiddleAgain && !allGodsFinished && (
           <motion.img
             src={DogGod}
             alt="Dog God"
@@ -142,6 +205,12 @@ const HomePage = () => {
         alt="Coin"
         className="coin-image"
         drag={!moveCoinToCenter}
+        onClick={() => {
+          if (showHand) {
+            setIsDraggingWithHand(true);
+          }
+        }}
+        
         dragElastic={0.5}
         dragMomentum={false}
         onDragStart={handleDragStart}
@@ -158,10 +227,16 @@ const HomePage = () => {
           scale: 1,
           position: 'absolute',
         }}
+        
         animate={{
-          top: 
-            moveCoinToMiddleAgain
-            ? '20%'
+          top: isSaturated
+            ? '38%'
+            : isDraggingWithHand
+            ? mousePos.y
+            : allGodsFinished
+            ? '50%'
+            :moveCoinToMiddleAgain
+            ? '33%'
             : moveCoinToTopLeft
             ? '30%' 
             : moveToCornerFinished 
@@ -171,9 +246,12 @@ const HomePage = () => {
             : moveCoinToCenter 
             ? '50%' 
             : '60%',
-          left: 
-            moveCoinToMiddleAgain
-            ? '50%'
+          left: isSaturated
+            ? '48.5%'
+            : isDraggingWithHand
+            ? mousePos.x
+            : moveCoinToMiddleAgain
+            ? '49%'
             : moveCoinToTopLeft
             ? '23%' 
             : moveToCornerFinished 
@@ -183,9 +261,15 @@ const HomePage = () => {
             : '50%',
           x: '-50%',
           y: '-50%',
-          scale: moveCoinToTopLeft ? 1.2 : (storyFinished ? 2.5 : 1),
-          rotate: moveCoinToTopLeft ? 360 : (moveToCornerFinished ? 0 : (startSpinning ? 360 : 0)),
-          transition: moveCoinToTopLeft
+          scale: isSaturated? 0.8 : moveCoinToMiddleAgain ? 1.1 : moveCoinToTopLeft ? 1.2 : (storyFinished ? 2.5 : 1),
+          rotate: allGodsFinished ? [0, 360] : (moveCoinToMiddleAgain ? [360, 0] : moveCoinToTopLeft ? [0, 360] : (moveToCornerFinished ? 0 : (startSpinning ? 360 : 0))),
+          transition: isDraggingWithHand
+            ? { duration: 0 }  // no animation when following mouse
+            : allGodsFinished
+            ? { rotate: { duration: 2, ease: 'linear', repeat: Infinity, repeatType: "loop" } }
+            : moveCoinToMiddleAgain
+            ? { duration: 1.5, ease: 'easeInOut' }
+            : moveCoinToTopLeft
             ? { duration: 1.5, ease: 'easeInOut' }
             : moveToCornerFinished
             ? { duration: 2, ease: 'easeInOut' }
@@ -240,17 +324,28 @@ const HomePage = () => {
         )}
 
         {moveToCornerFinished && !moveCoinToTopLeft && <div className="main-god-text">{mainGodText}</div>}
-        {showEvilGod && (
+        {showEvilGod && !moveCoinToMiddleAgain && !allGodsFinished && (
           <motion.img
             src={EvilGod}
             alt="Evil God"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 2, ease: "easeOut" }}
             className="evil-god-image"
           />
         )}  
-        {showEvilGod && !moveCoinToMiddleAgain && <div className="evil-god-text">{evilGodText}</div>}
-       
+        {showEvilGod && !moveCoinToMiddleAgain && !allGodsFinished && <div className="evil-god-text">{evilGodText}</div>}
+        {showHand && !isSaturated && (
+            <img
+              src={Hand}
+              alt="hand"
+              style={handStyle}
+            />)}
+
+        {showEntryBackground && (
+          <div class="circle" onClick={handleOpenTemple}></div>
+        )}
+        {goToTemple && <TempleEntry />}
     </div>
   );
 };
