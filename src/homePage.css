@@ -27,8 +27,12 @@
   background-repeat: no-repeat;
   filter: grayscale(100%);
   position: relative;
+}
+
+.background-entry.ready {
   transition: filter 1s ease;
 }
+
 
 .background-entry.saturated {
   filter: grayscale(0%); /* 🌈 full color */

@@ -82,7 +82,18 @@ const HomePage = () => {
   
   const evilGodText = `Through ritual staking and communion with the chain, visions of the future may be granted. The Cat Gods see the cycles. They see you bla bla bla Through ritual staking and communion with the chain, visions of the future may be granted. The.`
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(-1);
-  
+  const [backgroundReady, setBackgroundReady] = useState(false);
+
+useEffect(() => {
+  if (showEntryBackground) {
+    // Next tick, after showing, allow transitions
+    const timer = setTimeout(() => {
+      setBackgroundReady(true);
+    }, 50); // just a tiny delay (50ms)
+    return () => clearTimeout(timer);
+  }
+}, [showEntryBackground]);
+
 
   useEffect(() => {
     if (currentSentenceIndex >= 0 && currentSentenceIndex < storySentences.length - 1) {
@@ -182,7 +193,7 @@ const HomePage = () => {
   
   return (
     <div className={`homepage-container 
-      ${showEntryBackground ? (isSaturated ? 'background-entry saturated' : 'background-entry') 
+      ${showEntryBackground ? `background-entry ${backgroundReady ? 'ready' : ''} ${isSaturated ? 'saturated' : ''}` 
       : moveCoinToCenter ? 'background-changed' : ''}`
     } onClick={handleBackgroundClick}>
       <div className="tiger-wrapper" >
