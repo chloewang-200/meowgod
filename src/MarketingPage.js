@@ -11,7 +11,8 @@ import EvilGod from './assets/evil_god.png';
 import DogGod from './assets/dog_god.png';
 import Hand from './assets/human_hand.png';
 import TempleEntry from './TempleEntry2.js'
-
+import StarGlitter from './assets/star-glitter.gif';
+import StarGlitter6 from './assets/star_glitter_6.gif'
 const MarketingPage = () => {
 
   const [moveCoinToCenter, setMoveCoinToCenter] = useState(false);
@@ -31,6 +32,9 @@ const MarketingPage = () => {
   const [showEntryBackground, setShowEntryBackground] = useState(false);
   const [isSaturated, setIsSaturated] = useState(false);
   const [goToTemple, setGoToTemple] = useState(false);
+  const [zIndex, setZIndex] = useState(2);
+  const [showStar, setShowStar] = useState(false);
+
 
   const containerRef = useRef(null);
   const [dimensions, setDimensions] = useState({
@@ -255,6 +259,7 @@ useEffect(() => {
     setMoveCoinToCenter(false);
     setStartSpinning(false);
     setCurrentSentenceIndex(-1);
+    setZIndex(99);
   };
   
 
@@ -272,6 +277,7 @@ useEffect(() => {
   
   useEffect(() => {
     if (!showHand) { return; }
+    if (!isDraggingWithHand) { return; }
     const entryBackgroundTimer = setTimeout(() => {
       setShowEntryBackground(true);
     }, 1500);
@@ -364,10 +370,11 @@ useEffect(() => {
     width: `${dimensions.displayWidth * 0.16}px`,
     height: 'auto',
     transformOrigin: 'center center',
-    
-    zIndex: 2,
+    display: goToTemple ? 'none' : 'block',
+    zIndex: zIndex,
     // Track position updates for smooth animations
     transition: (!isDraggingWithHand && !isResizing )? 'left 0.5s ease-in-out, top 0.5s ease-in-out' : 'none',
+    pointerEvents: showEntryBackground ? 'none' : 'auto',
   }}
 >
   <motion.img
@@ -386,6 +393,8 @@ useEffect(() => {
         setIsDraggingWithHand(true);
       }
     }}
+    onMouseEnter={() => setShowStar(true)}
+    onMouseLeave={() => setShowStar(false)}
     dragConstraints={{
       top: 0,
       left: 0,
@@ -396,9 +405,6 @@ useEffect(() => {
     dragMomentum={false}
     onDragStart={handleDragStart}
     onDragEnd={handleDragEnd}
-    whileTap={{
-      zIndex: 9999,
-    }}
     animate={{
       rotate: allGodsFinished 
         ? [0, 360] 
@@ -578,6 +584,28 @@ useEffect(() => {
           />
         )}
         </div>
+        {showHand &&showStar && <img 
+        style = {{
+          left: `${10 * dimensions.displayWidth / 100 + (window.innerWidth - dimensions.displayWidth)/2}px`,
+          top: `${20 * dimensions.displayHeight / 100 + (window.innerHeight - dimensions.displayHeight)/2}px`,
+          width: `${dimensions.displayWidth * 0.1}px`,
+          height: 'auto',
+          position: 'absolute',
+        }}
+        src={StarGlitter6} alt="Star"
+         />}
+
+{showHand &&showStar && !showEntryBackground && <img 
+        style = {{
+          left: `${75 * dimensions.displayWidth / 100 + (window.innerWidth - dimensions.displayWidth)/2}px`,
+          top: `${60 * dimensions.displayHeight / 100 + (window.innerHeight - dimensions.displayHeight)/2}px`,
+          width: `${dimensions.displayWidth * 0.16}px`,
+          transform: 'rotate(200deg)',
+          height: 'auto',
+          position: 'absolute',
+        }}
+        src={StarGlitter6} alt="Star"
+         />}
         {showHand && !isSaturated && (
             <img
               src={Hand}
@@ -586,10 +614,10 @@ useEffect(() => {
             />)}
 
         {showEntryBackground && (
-          <div class="circle" onClick={handleOpenTemple}></div>
+          <div class="circle" onClick={handleOpenTemple} style={{display: goToTemple ? 'none' : 'block'}}></div>
         )}
         {goToTemple && <TempleEntry />}
-
+       
         </div>
       </div>
     </div>
