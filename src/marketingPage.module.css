@@ -1,0 +1,98 @@
+.pageContainer {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homepageContainer {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('./assets/homepage_bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+
+.homepageContainerChanged {
+  height: 100vh;
+  width: 100vw;
+  background-image:url('./assets/starry_bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-color: #170a07;
+  overflow: hidden;
+}
+
+.backgroundEntry{
+  background-image: url('./assets/entry_background.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(100%);
+  position: relative;
+}
+
+.background-entryReady {
+  transition: filter 1s ease;
+}
+
+
+.saturated {
+  filter: grayscale(0%); /* 🌈 full color */
+}
+
+
+
+
+.coinImage {
+  position: absolute;
+  top: 60%;           /* Vertically centered */
+  left: 50%;          /* Horizontally centered */
+  height: auto;       /* Keep aspect ratio */
+  z-index: 3;
+  filter: grayscale(0%) !important;
+  transform: translate(-50%, -50%) 
+}
+
+.coinImage:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  filter: drop-shadow(0 0 20px rgb(255, 217, 0));
+}
+
+.homepageContainer {
+  width: 99%;
+  height: 99vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  background-image: url('./assets/homepage_bg.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.overlay-element {
+  position: absolute;
+  /* Additional styling */
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
