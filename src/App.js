@@ -12,7 +12,7 @@ import FountainPage from './TemplePages/FountainPage';
 import WheelPage from './TemplePages/WheelPage'; 
 import SlotMachinePage from './TemplePages/SlotMachinePage';
 import CatchCoin from './CatchCoin';
-
+import Homepage from './HomePage';
 function App() {
   return (
     <Router>
@@ -20,6 +20,7 @@ function App() {
           {/* <Route path="/" element={<CatchCoin />} /> */}
           {/* <Route path="/" element={<Cat />} /> */}
           <Route path="/" element={<CatchCoin />} />
+          <Route path="/homepage" element={<Homepage />} />
           <Route path="/temple" element={<ProtectedRoute><Temple /></ProtectedRoute>} />
           <Route path="/money" element={<ProtectedRoute><MoneyPage /></ProtectedRoute>} />
           <Route path="/money2" element={<ProtectedRoute><MoneyPage /></ProtectedRoute>} />

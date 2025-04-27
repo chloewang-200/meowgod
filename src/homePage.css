@@ -1,0 +1,69 @@
+.homepage-container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('./assets/homepage_bg.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-color: #fafafa;
+}
+
+.background-changed {
+  background-image: url('./assets/starry_bg.png');
+  background-color: #170a07;
+}
+
+.tiger-wrapper {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 35vw;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Tiger top overlay */
+.tiger-top-image {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+
+}
+
+.tiger-image {
+  position: absolute;
+  top: 55%;           /* Vertically centered */
+  left: 50%;          /* Horizontally centered */
+  width: 35vw;        /* Adjust percentage to your preference */
+  height: auto;       /* Keep aspect ratio */
+  transform: translate(-50%, -50%); /* Perfect centering */
+  z-index: 1;
+}
+
+.coin-image {
+  position: absolute;
+  top: 60%;           /* Vertically centered */
+  left: 50%;          /* Horizontally centered */
+  width: 13.5vw;        /* Adjust percentage to your preference */
+  height: auto;       /* Keep aspect ratio */
+  z-index: 2;
+}
+
+.coin-image:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  filter: drop-shadow(0 0 20px rgb(255, 217, 0));
+}
+
+/* .tiger-top-image {
+  position: absolute;
+  top: 55%; 
+  left: 50%;
+  width: 35vw;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+} */

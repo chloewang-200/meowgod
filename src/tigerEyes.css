@@ -1,0 +1,25 @@
+.eye {
+    position: absolute;
+    width: 1.5vw;
+    height: auto;
+    z-index: 5;
+    pointer-events: none;
+    will-change: transform;
+    transform: translate(-50%, -50%);
+  }
+  
+  .eye-left {
+    top: 26.5%;
+    left: 32%;
+  }
+  
+  .eye-right {
+    top: 26.5%;
+    left: 63.5%;
+  }
+  
+  .eye-center {
+    top: 18%;
+    left: 48%;
+  }
+  

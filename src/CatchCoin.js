@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import coinImg from './assets/coin.png';
-import './catchCoin.css';
+import './catchCoin.module.css';
 import catSquatImg from './assets/cat_squat.png';
 import catWizard from './assets/cat_wizard.png'; // running pose
 import catWizardStand from './assets/cat_wizard_stand.png'; // standing pose
