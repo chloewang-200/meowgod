@@ -13,6 +13,7 @@ import Hand from './assets/human_hand.png';
 import TempleEntry from './TempleEntry2.js'
 import StarGlitter from './assets/star-glitter.gif';
 import StarGlitter6 from './assets/star_glitter_6.gif'
+import HintCursor from './HintCursor';
 const MarketingPage = () => {
 
   const [moveCoinToCenter, setMoveCoinToCenter] = useState(false);
@@ -324,8 +325,10 @@ useEffect(() => {
               height: 'auto'  // Maintain aspect ratio
             }} 
           />
-        <div className="tiger-eyes-wrapper" style={{ display: moveCoinToCenter ? 'none' : 'block' }}>
-          <TigerEyes />
+        <div className="tiger-eyes-wrapper" 
+          style={{ display: moveCoinToCenter ? 'none' : 'block',
+          }}>
+          <TigerEyes style = {{width: `${dimensions.displayWidth * 0.35}px`,}}/>
         </div>
         
       </div>
@@ -371,6 +374,7 @@ useEffect(() => {
     height: 'auto',
     transformOrigin: 'center center',
     display: goToTemple ? 'none' : 'block',
+    filter: showStar ? 'drop-shadow(0 0 20px rgb(255, 217, 0))' : 'none',
     zIndex: zIndex,
     // Track position updates for smooth animations
     transition: (!isDraggingWithHand && !isResizing )? 'left 0.5s ease-in-out, top 0.5s ease-in-out' : 'none',
@@ -395,13 +399,8 @@ useEffect(() => {
     }}
     onMouseEnter={() => setShowStar(true)}
     onMouseLeave={() => setShowStar(false)}
-    dragConstraints={{
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0
-    }}
-    dragElastic={0.5}
+
+    // dragElastic={0.5}
     dragMomentum={false}
     onDragStart={handleDragStart}
     onDragEnd={handleDragEnd}
@@ -466,7 +465,11 @@ useEffect(() => {
 </div>
 {/* End of Coin */}
 {/* Bottom Tiger */}
-<img src={Tiger} alt="Tiger" className="tiger-image" style={{ display: moveCoinToCenter ? 'none' : 'block' }} />
+<img src={Tiger} alt="Tiger" className="tiger-image" 
+style={{ display: moveCoinToCenter ? 'none' : 'block',
+  width: `${dimensions.displayWidth * 0.35}px`,
+  height: 'auto',
+}} />
 {/* End of Bottom Tiger */}
         {/* Story Text */}
         {!storyFinished && <div className="story-text">
@@ -557,6 +560,7 @@ useEffect(() => {
           zIndex: 9999,
          }}
         >
+        {moveToCornerFinished || showEvilGod || moveCoinToMiddleAgain || allGodsFinished && <HintCursor />}
         {showEvilGod && !moveCoinToMiddleAgain && !allGodsFinished && <div>{evilGodText}</div>}
         </div>
         {/* End of Evil God Text */}

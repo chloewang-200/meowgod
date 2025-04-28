@@ -58,9 +58,9 @@ const TigerEyes = () => {
 
   return (
     <>
-      <img ref={leftEyeRef} src={EyeImage} alt="Eye" className="eye eye-left" />
-      <img ref={rightEyeRef} src={EyeImage} alt="Eye" className="eye eye-right" />
-      <img ref={centerEyeRef} src={EyeImage} alt="Eye" className="eye eye-center" />
+      <img ref={leftEyeRef} src={EyeImage} alt="Eye" className="eye eye-left" style={{width: `${Math.min(window.innerWidth * 0.03, window.innerHeight * 0.03)}px`,}} />
+      <img ref={rightEyeRef} src={EyeImage} alt="Eye" className="eye eye-right" style={{width: `${Math.min(window.innerWidth * 0.03, window.innerHeight * 0.03)  }px`,}} />
+      <img ref={centerEyeRef} src={EyeImage} alt="Eye" className="eye eye-center" style={{width: `${Math.min(window.innerWidth * 0.03, window.innerHeight * 0.03)  }px`,}} />
     </>
   );
 };
