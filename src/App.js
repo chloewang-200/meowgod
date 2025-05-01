@@ -14,10 +14,14 @@ import SlotMachinePage from './TemplePages/SlotMachinePage';
 import CatchCoin from './CatchCoin';
 import Homepage from './HomePage';
 import MarketingPage from './MarketingPage';
+import { AuthProvider } from './contexts/AuthContext';
+import BackendTest from './components/BackendTest';
+
 function App() {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
           {/* <Route path="/" element={<CatchCoin />} /> */}
           {/* <Route path="/" element={<Cat />} /> */}
           <Route path="/" element={<CatchCoin />} />
@@ -32,8 +36,10 @@ function App() {
           <Route path="/fountain" element={<ProtectedRoute><CandlePage /></ProtectedRoute>} />
           <Route path="/wheel" element={<ProtectedRoute><WheelPage /></ProtectedRoute>} />
           <Route path="/Slot" element={<ProtectedRoute><SlotMachinePage /></ProtectedRoute>} />
-      </Routes>
-    </Router>
+          <Route path="/test" element={<ProtectedRoute><BackendTest /></ProtectedRoute>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

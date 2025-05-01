@@ -291,7 +291,7 @@ useEffect(() => {
       <div 
         ref={containerRef} 
         className={`${styles.homepageContainer} 
-        ${showEntryBackground ? `${styles.backgroundEntry} ${backgroundReady ? styles.ready : ''} ${isSaturated ? styles.saturated : ''}` 
+        ${showEntryBackground ? ` ${styles.backgroundEntry} ${backgroundReady ? styles.ready : ''} ${isSaturated ? styles.saturated : ''}` 
         : moveCoinToCenter ? styles.homepageContainerChanged : ''}`}
         onClick={handleBackgroundClick}
       >
