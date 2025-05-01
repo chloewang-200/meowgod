@@ -41,7 +41,7 @@
 
 /* Make the overall background slightly brighter when lit */
 .altar-lit .altar-background {
-  filter: brightness(0.6) contrast(1.1);
+  filter: brightness(0.75) contrast(1.1);
 }
 
 /* Instead, we add a mask that creates a localized light effect */

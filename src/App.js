@@ -11,6 +11,7 @@ import EvilPage from './TemplePages/EvilPage';
 import CandlePage from './TemplePages/CandlePage';
 import WheelPage from './TemplePages/WheelPage'; 
 import SlotMachinePage from './TemplePages/SlotMachinePage';
+import AltarPage from './TemplePages/AltarPage';
 import CatchCoin from './CatchCoin';
 import Homepage from './HomePage';
 import MarketingPage from './MarketingPage';
@@ -29,9 +30,10 @@ function App() {
           <Route path="/main" element={<ProtectedRoute><MainGodPage /></ProtectedRoute>} />
           <Route path="/nft" element={<ProtectedRoute><NFTPage /></ProtectedRoute>} />
           <Route path="/evil" element={<ProtectedRoute><EvilPage /></ProtectedRoute>} />
-          <Route path="/fountain" element={<ProtectedRoute><CandlePage /></ProtectedRoute>} />
+          <Route path="/candle" element={<ProtectedRoute><CandlePage /></ProtectedRoute>} />
           <Route path="/wheel" element={<ProtectedRoute><WheelPage /></ProtectedRoute>} />
           <Route path="/Slot" element={<ProtectedRoute><SlotMachinePage /></ProtectedRoute>} />
+          <Route path="/altar" element={<ProtectedRoute><AltarPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
