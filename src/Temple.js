@@ -13,7 +13,7 @@ const Temple = () => {
     <div className="temple-container">
       <img src={background} alt="Temple Background" className="temple-bg" />
 
-      <Link to="/fountain">
+      <Link to="/candle">
         <img src={fountain} alt="Fountain" className="fountain" />
       </Link>
 

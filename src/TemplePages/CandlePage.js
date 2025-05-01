@@ -46,6 +46,7 @@ const CandlePage = () => {
     <div className={`candle-altar ${isLit ? 'altar-lit' : 'altar-dark'}`}>
       <div className="altar-container">
         <img src={altarBg} alt="Altar Background" className="altar-background" />
+        
         {isLit && (
           <div 
             ref={maskRef}

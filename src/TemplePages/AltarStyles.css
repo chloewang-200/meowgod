@@ -1,0 +1,117 @@
+/* Altar Page Styles */
+.altar-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.altar-background {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: relative;
+  filter: none;
+  opacity: 1;
+}
+
+.altar-table {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 38%;
+  background-color: #FBBB71; /* Light wood color */
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  filter: none !important;
+  opacity: 1 !important;
+  /* Try forcing the color */
+  background: #FBBB71 !important;
+  cursor: pointer;
+}
+
+/* Praying figures styles */
+.praying-figures-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  height: 55%;
+  pointer-events: none;
+}
+
+.praying-figures-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  height: 55%;
+  pointer-events: none;
+}
+
+.praying-left, .praying-right {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: none !important;
+}
+
+/* Eyes tree styles */
+.eyes-tree-container {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 65%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.eyes-tree {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: none !important;
+}
+
+/* Random items styles */
+.random-item {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  height: 60px;
+  width: auto;
+  filter: none !important;
+  transition: all 0.3s ease;
+}
+
+/* Make food items smaller */
+.item-food {
+  height: 45px;
+}
+
+/* Make flowers bigger */
+.item-flower {
+  height: 85px;
+}
+
+/* Make vases bigger */
+.item-vase {
+  height: 100px;
+}
+
+.item-candle {
+  height: 100px;
+}
+
+/* Make teaware bigger */
+.item-teaware {
+  height: 100px;
+}
+
+.random-item img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: none !important;
+}
