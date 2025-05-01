@@ -30,6 +30,7 @@
   position: relative;
   background-color: #170a07;
   overflow: hidden;
+  transition: background-image 1s ease;
 }
 
 .backgroundEntry{
@@ -48,6 +49,7 @@
 
 .saturated {
   filter: grayscale(0%); /* 🌈 full color */
+  transition: filter 1s ease;
 }
 
 
