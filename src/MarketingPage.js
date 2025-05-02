@@ -151,7 +151,7 @@ useEffect(() => {
   
 
 
-  const storySentences_test = [
+  const storySentences = [
     "This is a story of a Coin.",
     "A Coin that was never meant for ordinary hands.",
     "When you possess the Coin, you hold a choice.",
@@ -160,10 +160,10 @@ useEffect(() => {
     "You may alter your fate.",
     ""
   ];
-  const storySentences = [
-    "This is a story of a Coin.",
-    ""
-  ];
+  // const storySentences = [
+  //   "This is a story of a Coin.",
+  //   ""
+  // ];
   
   const mainGodText = `
   Guardian of treasures, Protector of fortune, Keeper of sacred vaults.
@@ -173,6 +173,7 @@ useEffect(() => {
   `;
   
   const evilGodText = `Through ritual staking and communion with the chain, visions of the future may be granted. The Cat Gods see the cycles. They see you bla bla bla Through ritual staking and communion with the chain, visions of the future may be granted. The.`
+  const dogGodText = `Through ritual staking and communion with the chain, visions of the future may be granted. The Cat Gods see the cycles. They see you bla bla bla Through ritual staking and communion with the chain, visions of the future may be granted. The.`
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(-1);
   const [backgroundReady, setBackgroundReady] = useState(false);
 
@@ -472,7 +473,19 @@ style={{ display: moveCoinToCenter ? 'none' : 'block',
 }} />
 {/* End of Bottom Tiger */}
         {/* Story Text */}
-        {!storyFinished && <div className="story-text">
+        {!storyFinished && <div className="story-text" 
+        style={{
+          left: `${50 * dimensions.displayWidth / 100 + (window.innerWidth - dimensions.displayWidth)/2}px`,
+          top: `${85 * dimensions.displayHeight / 100 + (window.innerHeight - dimensions.displayHeight)/2}px`,
+          transform: 'translate(-50%, -50%)',
+          transformOrigin: 'center center',
+          position: 'absolute',
+          fontSize: `${dimensions.displayWidth * 0.020}px`,
+          fontFamily: 'Protest Revolution',
+          color: 'white',
+          zIndex: 99,
+        }}
+        > 
                 {storySentences[currentSentenceIndex]}
               </div>}
         {/* End of Story Text */}
@@ -511,6 +524,7 @@ style={{ display: moveCoinToCenter ? 'none' : 'block',
           transformOrigin: 'center center',
           position: 'absolute',
           fontSize: `${dimensions.displayWidth * 0.020}px`,
+          fontFamily: 'Protest Revolution',
           width: `${dimensions.displayWidth * 0.3}px`,
           color: 'white',
           zIndex: 9999,
@@ -555,6 +569,7 @@ style={{ display: moveCoinToCenter ? 'none' : 'block',
           transformOrigin: 'center center',
           position: 'absolute',
           fontSize: `${dimensions.displayWidth * 0.020}px`,
+          fontFamily: 'Protest Revolution',
           width: `${dimensions.displayWidth * 0.3}px`,
           color: 'white',
           zIndex: 9999,
@@ -575,6 +590,7 @@ style={{ display: moveCoinToCenter ? 'none' : 'block',
           position: 'absolute',
           zIndex: 9999,
         }}> 
+
         {moveCoinToMiddleAgain && !allGodsFinished && (
           <motion.img
             src={DogGod}
@@ -588,6 +604,43 @@ style={{ display: moveCoinToCenter ? 'none' : 'block',
           />
         )}
         </div>
+        <div className="dog-god-text-wrapper"
+         style={{
+          left: `${82 * dimensions.displayWidth / 100 + (window.innerWidth - dimensions.displayWidth)/2}px`,
+          top: `${50 * dimensions.displayHeight / 100 + (window.innerHeight - dimensions.displayHeight)/2}px`,
+          transform: 'translate(-50%, -50%)',
+          transformOrigin: 'center center',
+          position: 'absolute',
+          fontSize: `${dimensions.displayWidth * 0.025}px`,
+          fontFamily: 'Protest Revolution',
+          width: `${dimensions.displayWidth * 0.28}px`,
+          color: 'white',
+          zIndex: 9999,
+         }}
+        >
+        {moveToCornerFinished || showEvilGod || moveCoinToMiddleAgain || allGodsFinished && <HintCursor />}
+        {moveCoinToMiddleAgain && !allGodsFinished && <div>{dogGodText}</div>}
+        </div>
+
+        <div className="dog-god-text-wrapper"
+         style={{
+          left: `${18 * dimensions.displayWidth / 100 + (window.innerWidth - dimensions.displayWidth)/2}px`,
+          top: `${50 * dimensions.displayHeight / 100 + (window.innerHeight - dimensions.displayHeight)/2}px`,
+          transform: 'translate(-50%, -50%) scaleX(-1)',
+          transformOrigin: 'center center',
+          position: 'absolute',
+          fontSize: `${dimensions.displayWidth * 0.025}px`,
+          fontFamily: 'Protest Revolution',
+          width: `${dimensions.displayWidth * 0.28}px`,
+          color: 'white',
+          zIndex: 9999,
+         }}
+        >
+        {moveToCornerFinished || showEvilGod || moveCoinToMiddleAgain || allGodsFinished && <HintCursor />}
+        {moveCoinToMiddleAgain && !allGodsFinished && <div>{dogGodText}</div>}
+        </div>
+
+
         {showHand &&showStar && <img 
         style = {{
           left: `${10 * dimensions.displayWidth / 100 + (window.innerWidth - dimensions.displayWidth)/2}px`,

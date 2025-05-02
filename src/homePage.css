@@ -93,18 +93,6 @@
   pointer-events: none;
 } */
 
-.story-text {
-  position: absolute;
-  top: 10vh;
-  width: 100%;
-  text-align: center;
-  font-size: 2rem;
-  color: white;
-  font-family: 'serif';
-  padding: 0 10vw;
-  user-select: none;
-  cursor: pointer;
-}
 
 .main-god-text {
   position: absolute;
