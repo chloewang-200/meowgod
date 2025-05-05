@@ -50,10 +50,10 @@
 
 .nft-god {
     position: absolute;
-    top: -20%;
+    top: 10%;
     left: 37%;
     align-items: center;
-    scale: 0.6;
+    scale: 1;
     filter: drop-shadow(0 0 10px rgba(248, 239, 214, 0.8));
     z-index: 2;
     animation: floatgod 4s ease-in-out infinite;

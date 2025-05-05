@@ -15,14 +15,21 @@
   z-index: 0;
 }
 
+/* .god {
+  width: 250%;
+  height: auto;
+} */
+
 .fountain {
   position: absolute;
   bottom: 0;
   left: 50%;
+  width: 30%;
+  height: auto;
   transform: translateX(-50%);
-  height: 20vh;
-  z-index: 2;
+  z-index: 5;
 }
+
 
 .gods {
   position: absolute;
@@ -37,6 +44,12 @@
 .gods img {
   height: 58vh;
   width: auto;
+}
+
+.temple-main-god {
+  left: 200%;
+  width: 55vw;
+  height: auto;
 }
 
 .side-god {
