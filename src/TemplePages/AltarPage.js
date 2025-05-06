@@ -27,9 +27,12 @@ const AltarPage = () => {
   const [randomItems, setRandomItems] = useState([]);
   const [balance, setBalance] = useState(null);
   const [error, setError] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [clickPosition, setClickPosition] = useState({ x: 0, y: 0, tableRect: null });
   const { currentUser } = useAuth();
   
   const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
+  const SACRIFICE_COST = 100;
 
   // Initialize Google Fonts
   useEffect(() => {
@@ -168,16 +171,38 @@ const AltarPage = () => {
     { src: strawberry, alt: 'Strawberry', id: 'strawberry', category: 'food' }
   ];
   
-  const handleTableClick = async (e) => {
-    // Capture dimensions first, before any async operations
+  const handleTableClick = (e) => {
+    if (!currentUser) {
+      setError('You must be logged in to make offerings');
+      return;
+    }
+    
+    // Capture dimensions first, before showing popup
     const tableRect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - tableRect.left;
     const y = e.clientY - tableRect.top;
     
-    // Now attempt to deduct the balance
+    // Save click position for later use
+    setClickPosition({
+      x,
+      y,
+      tableRect: {
+        width: tableRect.width,
+        height: tableRect.height
+      }
+    });
+    
+    // Show the confirmation popup
+    setShowPopup(true);
+  };
+  
+  const handleConfirmSacrifice = async () => {
+    // Close the popup
+    setShowPopup(false);
+    
+    // Attempt to deduct balance
     const success = await deductBalance();
     if (!success) {
-      // If deducting balance failed, don't add an item
       return;
     }
     
@@ -189,12 +214,16 @@ const AltarPage = () => {
       ...randomItem,
       uniqueId: Date.now(), // unique id for React key
       style: {
-        left: `${(x / tableRect.width) * 100}%`,
-        top: `${(y / tableRect.height) * 100}%`
+        left: `${(clickPosition.x / clickPosition.tableRect.width) * 100}%`,
+        top: `${(clickPosition.y / clickPosition.tableRect.height) * 100}%`
       }
     }]);
   };
   
+  const handleCancelSacrifice = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="altar-wrapper">
       <div className="altar-container">
@@ -231,6 +260,21 @@ const AltarPage = () => {
             ))}
           </div>
         </div>
+        
+        {/* Confirmation Popup */}
+        {showPopup && (
+          <div className="sacrifice-popup-overlay">
+            <div className="sacrifice-popup">
+              <h3>Confirm Sacrifice</h3>
+              <p>Each sacrifice costs {SACRIFICE_COST}.</p>
+              <p>Your current balance is {balance}.</p>
+              <div className="popup-buttons">
+                <button className="cancel-button" onClick={handleCancelSacrifice}>Cancel</button>
+                <button className="confirm-button" onClick={handleConfirmSacrifice}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

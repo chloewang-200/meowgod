@@ -223,3 +223,77 @@ html, body {
   object-fit: contain;
   filter: none !important;
 }
+
+/* Styles for the sacrifice confirmation popup */
+.sacrifice-popup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.sacrifice-popup {
+  background: #000;
+  border: 2px solid #E95A21;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  color: #fff;
+  font-family: 'Protest Revolution', sans-serif;
+  position: relative;
+  box-shadow: 0 0 20px rgba(233, 90, 33, 0.6);
+}
+
+.sacrifice-popup h3 {
+  color: #E95A21;
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.sacrifice-popup p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.popup-buttons button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Protest Revolution', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button {
+  background-color: #333;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #555;
+}
+
+.confirm-button {
+  background-color: #E95A21;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #ff6c2f;
+  box-shadow: 0 0 10px rgba(233, 90, 33, 0.8);
+}
