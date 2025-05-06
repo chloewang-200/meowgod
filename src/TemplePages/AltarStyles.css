@@ -1,9 +1,55 @@
 /* Altar Page Styles */
+/* Override any global styles that might affect our fixed layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* Force the main app container to take full size */
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Create a wrapper for scrolling if needed */
+.altar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
 .altar-container {
   position: relative;
-  width: 100%;
-  height: 100vh;
+  width: 1200px;
+  height: 800px;
+  flex-shrink: 0;
+  flex-grow: 0;
   overflow: hidden;
+  transform-origin: center center;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1200px), (max-height: 800px) {
+  .altar-container {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 960px), (max-height: 640px) {
+  .altar-container {
+    transform: scale(0.6);
+  }
 }
 
 .altar-background {
@@ -13,6 +59,68 @@
   position: relative;
   filter: none;
   opacity: 1;
+}
+
+/* Balance box styles */
+.balance-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  padding: 8px 10px;
+  z-index: 100;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Protest Revolution', sans-serif;
+  text-align: center;
+  /* Create a spiky elliptical shape using radial-gradient */
+  background: radial-gradient(ellipse at center, #E95A21 60%, transparent 60.5%);
+  width: 160px;
+  height: 65px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Add the spikes with pseudo-element */
+  position: absolute;
+  transform: translate(0, 0);
+}
+
+.balance-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: #E95A21;
+  /* Create spikes using clip-path with many points */
+  clip-path: polygon(
+    50% 0%, 52% 5%, 55% 0%, 58% 5%, 61% 0%, 64% 5%, 67% 0%, 70% 5%, 73% 0%, 76% 5%, 79% 0%, 82% 5%, 85% 0%, 88% 5%, 91% 0%, 94% 5%, 97% 0%, 100% 5%,
+    100% 7%, 95% 10%, 100% 13%, 95% 16%, 100% 19%, 95% 22%, 100% 25%, 95% 28%, 100% 31%, 95% 34%, 100% 37%, 95% 40%, 100% 43%, 95% 46%, 100% 49%,
+    95% 52%, 100% 55%, 95% 58%, 100% 61%, 95% 64%, 100% 67%, 95% 70%, 100% 73%, 95% 76%, 100% 79%, 95% 82%, 100% 85%, 95% 88%, 100% 91%, 95% 94%, 100% 97%,
+    95% 100%, 92% 95%, 89% 100%, 86% 95%, 83% 100%, 80% 95%, 77% 100%, 74% 95%, 71% 100%, 68% 95%, 65% 100%, 62% 95%, 59% 100%, 56% 95%, 53% 100%, 50% 95%,
+    47% 100%, 44% 95%, 41% 100%, 38% 95%, 35% 100%, 32% 95%, 29% 100%, 26% 95%, 23% 100%, 20% 95%, 17% 100%, 14% 95%, 11% 100%, 8% 95%, 5% 100%, 0% 95%,
+    0% 93%, 5% 90%, 0% 87%, 5% 84%, 0% 81%, 5% 78%, 0% 75%, 5% 72%, 0% 69%, 5% 66%, 0% 63%, 5% 60%, 0% 57%, 5% 54%, 0% 51%,
+    5% 48%, 0% 45%, 5% 42%, 0% 39%, 5% 36%, 0% 33%, 5% 30%, 0% 27%, 5% 24%, 0% 21%, 5% 18%, 0% 15%, 5% 12%, 0% 9%, 5% 6%, 0% 3%, 3% 0%,
+    6% 5%, 9% 0%, 12% 5%, 15% 0%, 18% 5%, 21% 0%, 24% 5%, 27% 0%, 30% 5%, 33% 0%, 36% 5%, 39% 0%, 42% 5%, 45% 0%, 48% 5%
+  );
+}
+
+.balance-box p {
+  margin: 5px 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 1;
+  font-family: 'Protest Revolution', sans-serif;
+}
+
+.balance-box .error {
+  color: #E95A21;
+  font-size: 12px;
+  margin-top: 3px;
+  text-shadow: 0 0 2px #000;
 }
 
 .altar-table {

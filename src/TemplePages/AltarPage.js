@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AltarStyles.css';
 import prayingLeft from '../assets/altar/praying_left.png';
 import prayingRight from '../assets/altar/praying_right.png';
 import eyesTree from '../assets/altar/eyes_tree.png';
+import { useAuth } from '../contexts/AuthContext';
+
+// Import WebFont for Google Fonts
+import WebFont from 'webfontloader';
 
 // Import random items
 import redCandle from '../assets/altar/random_items/red_candle.png';
@@ -21,6 +25,131 @@ import strawberry from '../assets/altar/random_items/strawberry.png';
 
 const AltarPage = () => {
   const [randomItems, setRandomItems] = useState([]);
+  const [balance, setBalance] = useState(null);
+  const [error, setError] = useState('');
+  const { currentUser } = useAuth();
+  
+  const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
+
+  // Initialize Google Fonts
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Protest Revolution']
+      }
+    });
+  }, []);
+
+  // Fetch balance when component mounts
+  useEffect(() => {
+    if (currentUser) {
+      getBalance();
+    }
+  }, [currentUser]);
+
+  const getBalance = async () => {
+    try {
+      const idToken = await currentUser.getIdToken(true);
+      
+      const response = await fetch(`${BACKEND_URL}/balance`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        const responseText = await response.text();
+        throw new Error(`Failed to fetch balance: ${response.status} ${responseText}`);
+      }
+      
+      const responseText = await response.text();
+      console.log('Get balance response text:', responseText);
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+        console.log('Get balance parsed data:', data);
+      } catch (e) {
+        console.error('Error parsing balance response:', e);
+        throw new Error('Invalid response format');
+      }
+      
+      if (data.balance !== undefined) {
+        console.log('Setting balance to:', data.balance);
+        setBalance(data.balance);
+      } else {
+        console.warn('Balance not found in response:', data);
+      }
+      
+      setError('');
+    } catch (err) {
+      console.error('Error in getBalance:', err);
+      setError(err.message);
+    }
+  };
+
+  const deductBalance = async () => {
+    if (!currentUser) {
+      setError('You must be logged in to make offerings');
+      return false;
+    }
+
+    try {
+      const idToken = await currentUser.getIdToken();
+      
+      const response = await fetch(`${BACKEND_URL}/balance/deduct`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include',
+        body: JSON.stringify({ amount: 100 })
+      });
+      
+      if (!response.ok) {
+        const responseText = await response.text();
+        throw new Error(`Failed to deduct balance: ${response.status} ${responseText}`);
+      }
+      
+      const responseText = await response.text();
+      console.log('Deduct balance response text:', responseText);
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+        console.log('Deduct balance parsed data:', data);
+      } catch (e) {
+        console.error('Error parsing deduct balance response:', e);
+        throw new Error('Invalid response format');
+      }
+      
+      // Check if the response contains the new balance in different formats
+      if (data.new_balance !== undefined) {
+        console.log('Setting balance to new_balance:', data.new_balance);
+        setBalance(data.new_balance);
+      } else if (data.balance !== undefined) {
+        console.log('Setting balance to balance:', data.balance);
+        setBalance(data.balance);
+      } else {
+        console.warn('Balance not found in response, refreshing:', data);
+        // If we can't find the balance in the response, refresh it
+        getBalance();
+      }
+      
+      setError('');
+      return true;
+    } catch (err) {
+      console.error('Error in deductBalance:', err);
+      setError(err.message);
+      return false;
+    }
+  };
   
   // Array of available items
   const items = [
@@ -39,11 +168,18 @@ const AltarPage = () => {
     { src: strawberry, alt: 'Strawberry', id: 'strawberry', category: 'food' }
   ];
   
-  const handleTableClick = (e) => {
-    // Calculate position relative to the table
+  const handleTableClick = async (e) => {
+    // Capture dimensions first, before any async operations
     const tableRect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - tableRect.left;
     const y = e.clientY - tableRect.top;
+    
+    // Now attempt to deduct the balance
+    const success = await deductBalance();
+    if (!success) {
+      // If deducting balance failed, don't add an item
+      return;
+    }
     
     // Get a random item
     const randomItem = items[Math.floor(Math.random() * items.length)];
@@ -60,28 +196,40 @@ const AltarPage = () => {
   };
   
   return (
-    <div className="altar-container">
-      <div className="altar-background">
-        <div className="praying-figures-left">
-          <img src={prayingLeft} alt="Praying figures left" className="praying-left" />
+    <div className="altar-wrapper">
+      <div className="altar-container">
+        <div className="balance-box">
+          <p>Balance: {balance !== null ? balance : "Loading..."}</p>
+          {error && <p className="error">{error}</p>}
         </div>
-        <div className="praying-figures-right">
-          <img src={prayingRight} alt="Praying figures right" className="praying-right" />
+        
+        {/* Log the current balance state for debugging */}
+        <div style={{ display: 'none' }}>
+          {console.log('Current balance state:', balance)}
         </div>
-        <div className="eyes-tree-container">
-          <img src={eyesTree} alt="Eyes tree" className="eyes-tree" />
-        </div>
-        <div className="altar-table" onClick={handleTableClick}>
-          {/* Display all the random items that have been added */}
-          {randomItems.map((item) => (
-            <div 
-              key={item.uniqueId}
-              className={`random-item item-${item.category}`}
-              style={item.style}
-            >
-              <img src={item.src} alt={item.alt} />
-            </div>
-          ))}
+        
+        <div className="altar-background">
+          <div className="praying-figures-left">
+            <img src={prayingLeft} alt="Praying figures left" className="praying-left" />
+          </div>
+          <div className="praying-figures-right">
+            <img src={prayingRight} alt="Praying figures right" className="praying-right" />
+          </div>
+          <div className="eyes-tree-container">
+            <img src={eyesTree} alt="Eyes tree" className="eyes-tree" />
+          </div>
+          <div className="altar-table" onClick={handleTableClick}>
+            {/* Display all the random items that have been added */}
+            {randomItems.map((item) => (
+              <div 
+                key={item.uniqueId}
+                className={`random-item item-${item.category}`}
+                style={item.style}
+              >
+                <img src={item.src} alt={item.alt} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
