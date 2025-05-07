@@ -5,6 +5,7 @@ import prayingRight from '../assets/altar/praying_right.png';
 import eyesTree from '../assets/altar/eyes_tree.png';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserAltarItems, saveAltarItem, formatItemForDisplay } from './altarItemsUtil';
+import TreeEyes from '../TreeEyes';
 
 // Import WebFont for Google Fonts
 import WebFont from 'webfontloader';
@@ -31,6 +32,7 @@ const AltarPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0, tableRect: null });
   const [isLoading, setIsLoading] = useState(true);
+  const [isScreenTooSmall, setIsScreenTooSmall] = useState(false);
   const { currentUser } = useAuth();
   
   // const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
@@ -45,6 +47,26 @@ const AltarPage = () => {
         families: ['Protest Revolution']
       }
     });
+  }, []);
+
+  // Add screen size check
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const aspectRatio = width / height;
+      const minAspectRatio = 600 / 925; // approximately 0.649
+      setIsScreenTooSmall(aspectRatio < minAspectRatio);
+    };
+
+    // Check initially
+    checkScreenSize();
+
+    // Add resize listener
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   // Fetch balance and user's altar items when component mounts
@@ -298,54 +320,63 @@ const AltarPage = () => {
 
   return (
     <div className="altar-wrapper">
-      <div className="altar-container">
-        <div className="balance-box">
-          <p>Balance: {balance !== null ? balance : "Loading..."}</p>
-          {error && <p className="error">{error}</p>}
+      {isScreenTooSmall ? (
+        <div className="screen-size-warning">
+          <h2>Screen Too Small</h2>
+          <p>Please view this page on a larger screen or rotate your device to landscape mode.</p>
+          <p>Minimum aspect ratio: 600:925</p>
         </div>
-        
-        <div className="altar-background">
-          <div className="praying-figures-left">
-            <img src={prayingLeft} alt="Praying figures left" className="praying-left" />
+      ) : (
+        <div className="altar-container">
+          <div className="balance-box">
+            <p>Balance: {balance !== null ? balance : "Loading..."}</p>
+            {error && <p className="error">{error}</p>}
           </div>
-          <div className="praying-figures-right">
-            <img src={prayingRight} alt="Praying figures right" className="praying-right" />
-          </div>
-          <div className="eyes-tree-container">
-            <img src={eyesTree} alt="Eyes tree" className="eyes-tree" />
-          </div>
-          <div className="altar-table" onClick={handleTableClick}>
-            {isLoading ? (
-              <div className="loading-indicator">Loading items...</div>
-            ) : (
-              randomItems.map((item) => (
-                <div 
-                  key={item.uniqueId}
-                  className={`random-item item-${item.category}`}
-                  style={item.style}
-                >
-                  <img src={item.src} alt={item.alt} />
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-        
-        {/* Confirmation Popup */}
-        {showPopup && (
-          <div className="sacrifice-popup-overlay">
-            <div className="sacrifice-popup">
-              <h3>Confirm Sacrifice</h3>
-              <p>Each sacrifice costs {SACRIFICE_COST}.</p>
-              <p>Your current balance is {balance}.</p>
-              <div className="popup-buttons">
-                <button className="cancel-button" onClick={handleCancelSacrifice}>Cancel</button>
-                <button className="confirm-button" onClick={handleConfirmSacrifice}>Confirm</button>
-              </div>
+          
+          <div className="altar-background">
+            <div className="praying-figures-left">
+              <img src={prayingLeft} alt="Praying figures left" className="praying-left" />
+            </div>
+            <div className="praying-figures-right">
+              <img src={prayingRight} alt="Praying figures right" className="praying-right" />
+            </div>
+            <div className="eyes-tree-container">
+              <img src={eyesTree} alt="Eyes tree" className="eyes-tree" />
+              <TreeEyes />
+            </div>
+            <div className="altar-table" onClick={handleTableClick}>
+              {isLoading ? (
+                <div className="loading-indicator">Loading items...</div>
+              ) : (
+                randomItems.map((item) => (
+                  <div 
+                    key={item.uniqueId}
+                    className={`random-item item-${item.category}`}
+                    style={item.style}
+                  >
+                    <img src={item.src} alt={item.alt} />
+                  </div>
+                ))
+              )}
             </div>
           </div>
-        )}
-      </div>
+          
+          {/* Confirmation Popup */}
+          {showPopup && (
+            <div className="sacrifice-popup-overlay">
+              <div className="sacrifice-popup">
+                <h3>Confirm Sacrifice</h3>
+                <p>Each sacrifice costs {SACRIFICE_COST}.</p>
+                <p>Your current balance is {balance}.</p>
+                <div className="popup-buttons">
+                  <button className="cancel-button" onClick={handleCancelSacrifice}>Cancel</button>
+                  <button className="confirm-button" onClick={handleConfirmSacrifice}>Confirm</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

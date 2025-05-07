@@ -19,6 +19,7 @@ html, body {
 .altar-wrapper {
   position: fixed;
   top: 0;
+  margin-top:0 ;
   left: 0;
   width: 100%;
   height: 100%;
@@ -31,26 +32,28 @@ html, body {
 
 .altar-container {
   position: relative;
-  width: 1200px;
-  height: 800px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  overflow: hidden;
+  width: 100vw;
+  min-width: 800px;
+  height: 99vh;
+  /* flex-shrink: 0; */
+  /* flex-grow: 0; */
+  /* overflow: hidden; */
   transform-origin: center center;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 1200px), (max-height: 800px) {
+/* @media (max-width: 1200px), (max-height: 800px) {
   .altar-container {
     transform: scale(0.8);
   }
-}
+} */
 
-@media (max-width: 960px), (max-height: 640px) {
+/* @media (max-width: 960px), (max-height: 640px) {
   .altar-container {
     transform: scale(0.6);
   }
-}
+} */
+
 
 .altar-background {
   width: 100%;
@@ -167,7 +170,7 @@ html, body {
 /* Eyes tree styles */
 .eyes-tree-container {
   position: absolute;
-  top: 5%;
+  top: 0%;
   left: 50%;
   transform: translateX(-50%);
   height: 65%;
@@ -320,3 +323,94 @@ html, body {
   50% { opacity: 1; }
   100% { opacity: 0.6; }
 }
+
+/* Screen size warning styles */
+.screen-size-warning {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 2px solid #E95A21;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  font-family: 'Protest Revolution', sans-serif;
+  max-width: 90%;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(233, 90, 33, 0.6);
+  z-index: 1000;
+}
+
+.screen-size-warning h2 {
+  color: #E95A21;
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.screen-size-warning p {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Floating eyes styles */
+.floating-eyes {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Adjust eyes tree container to accommodate floating eyes */
+.eyes-tree-container {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 65%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Tree Eyes styles */
+.tree-eyes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tree-eyes-container .eye {
+  position: absolute;
+  width: 2%;
+  height: auto;
+  pointer-events: none;
+}
+
+
+.tree-eyes-container .eye-1 { top: 0.5%; left: 10%; }
+.tree-eyes-container .eye-2 { top: 13%; left: 7%; }
+.tree-eyes-container .eye-3 { top: 45.5%; left: 5.2%; }
+.tree-eyes-container .eye-4 { top: 62%; left: 3.5%; }
+.tree-eyes-container .eye-5 { top: 79.5%; left: 3.5%; }
+
+.tree-eyes-container .eye-6 { top: 8.5%; left: 20%; }
+.tree-eyes-container .eye-7 { top: 33.5%; left: 15.7%; }
+.tree-eyes-container .eye-8 { top: 71.8%; left: 13.7%; }
+
+
+.tree-eyes-container .eye-9 { top: -1.5%; left: 27%; }
+.tree-eyes-container .eye-10 { top: 27%; left: 26%; }
+.tree-eyes-container .eye-11 { top: 45.8%; left: 26.5%; }
+.tree-eyes-container .eye-12 { top: 76.5%; left: 22.5%; }
+
+.tree-eyes-container .eye-12 { top: 2.5%; left: 35%; }
