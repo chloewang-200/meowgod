@@ -297,3 +297,26 @@ html, body {
   background-color: #ff6c2f;
   box-shadow: 0 0 10px rgba(233, 90, 33, 0.8);
 }
+
+/* Loading indicator */
+.loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #E95A21;
+  font-family: 'Protest Revolution', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px 25px;
+  border-radius: 10px;
+  border: 2px solid #E95A21;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}

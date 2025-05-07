@@ -1,0 +1,73 @@
+{
+  "users": [
+    {
+      "userId": "user123",
+      "items": [
+        {
+          "id": 1,
+          "uniqueId": "1629384756123",
+          "category": "candle",
+          "position": { "left": "15%", "top": "40%" }
+        },
+        {
+          "id": 2,
+          "uniqueId": "1629384756124",
+          "category": "food",
+          "position": { "left": "45%", "top": "60%" }
+        },
+        {
+          "id": 7,
+          "uniqueId": "1629384756125",
+          "category": "flower",
+          "position": { "left": "75%", "top": "35%" }
+        }
+      ]
+    },
+    {
+      "userId": "user456",
+      "items": [
+        {
+          "id": 8,
+          "uniqueId": "1629384756223",
+          "category": "vase",
+          "position": { "left": "30%", "top": "45%" }
+        },
+        {
+          "id": 3,
+          "uniqueId": "1629384756224",
+          "category": "candle",
+          "position": { "left": "60%", "top": "30%" }
+        },
+        {
+          "id": 11,
+          "uniqueId": "1629384756225",
+          "category": "food",
+          "position": { "left": "25%", "top": "65%" }
+        },
+        {
+          "id": 13,
+          "uniqueId": "1629384756226",
+          "category": "food",
+          "position": { "left": "80%", "top": "50%" }
+        }
+      ]
+    },
+    {
+      "userId": "user789",
+      "items": [
+        {
+          "id": 5,
+          "uniqueId": "1629384756323",
+          "category": "food",
+          "position": { "left": "40%", "top": "50%" }
+        },
+        {
+          "id": 9,
+          "uniqueId": "1629384756324",
+          "category": "teaware",
+          "position": { "left": "20%", "top": "40%" }
+        }
+      ]
+    }
+  ]
+} 

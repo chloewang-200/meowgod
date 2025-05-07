@@ -4,6 +4,7 @@ import prayingLeft from '../assets/altar/praying_left.png';
 import prayingRight from '../assets/altar/praying_right.png';
 import eyesTree from '../assets/altar/eyes_tree.png';
 import { useAuth } from '../contexts/AuthContext';
+import { getUserAltarItems, saveAltarItem, formatItemForDisplay } from './altarItemsUtil';
 
 // Import WebFont for Google Fonts
 import WebFont from 'webfontloader';
@@ -29,6 +30,7 @@ const AltarPage = () => {
   const [error, setError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0, tableRect: null });
+  const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useAuth();
   
   const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
@@ -43,12 +45,53 @@ const AltarPage = () => {
     });
   }, []);
 
-  // Fetch balance when component mounts
+  // Fetch balance and user's altar items when component mounts
   useEffect(() => {
     if (currentUser) {
       getBalance();
+      loadUserItems();
     }
   }, [currentUser]);
+
+  // Load user's saved altar items
+  const loadUserItems = async () => {
+    try {
+      setIsLoading(true);
+      // For testing, use a hardcoded userId that matches our fake data
+      // In production, this would use currentUser.uid
+      const testUserId = "user123"; // Change this to test different users
+      
+      const userItems = await getUserAltarItems(testUserId);
+      
+      // Format items for display
+      const formattedItems = userItems.map(item => {
+        // Find the item details from our available items using numeric ID
+        const itemDetails = items.find(availableItem => availableItem.id === item.id);
+        
+        if (!itemDetails) {
+          console.warn(`Item with ID ${item.id} not found in available items`);
+          return null;
+        }
+        
+        return {
+          ...itemDetails,
+          uniqueId: item.uniqueId,
+          style: {
+            left: item.position.left,
+            top: item.position.top
+          }
+        };
+      }).filter(item => item !== null); // Filter out any null items (not found)
+      
+      setRandomItems(formattedItems);
+      console.log('Loaded user items:', formattedItems);
+    } catch (err) {
+      console.error('Error loading user items:', err);
+      setError('Failed to load your altar items');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const getBalance = async () => {
     try {
@@ -156,19 +199,19 @@ const AltarPage = () => {
   
   // Array of available items
   const items = [
-    { src: redCandle, alt: 'Red Candle', id: 'red_candle', category: 'candle' },
-    { src: apple, alt: 'Apple', id: 'apple', category: 'food' },
-    { src: threeCandles, alt: 'Three Candles', id: 'three_candles', category: 'candle' },
-    { src: patternCandle, alt: 'Pattern Candle', id: 'pattern_candle', category: 'candle' },
-    { src: cakes, alt: 'Cakes', id: 'cakes', category: 'food' },
-    { src: vaseAndGlass, alt: 'Vase and Glass', id: 'vase_and_glass', category: 'vase' },
-    { src: flowers, alt: 'Flowers', id: 'flowers', category: 'flower' },
-    { src: butterflyVase, alt: 'Butterfly Vase', id: 'butterfly_vase', category: 'vase' },
-    { src: pinkTeaSet, alt: 'Pink Tea Set', id: 'pink_tea_set', category: 'teaware' },
-    { src: dessertPlate, alt: 'Dessert Plate', id: 'dessert_plate', category: 'food' },
-    { src: yellowNoodles, alt: 'Yellow Noodles', id: 'yellow_noodles', category: 'food' },
-    { src: orangeNoodles, alt: 'Orange Noodles', id: 'orange_noodles', category: 'food' },
-    { src: strawberry, alt: 'Strawberry', id: 'strawberry', category: 'food' }
+    { src: redCandle, alt: 'Red Candle', id: 1, category: 'candle' },
+    { src: apple, alt: 'Apple', id: 2, category: 'food' },
+    { src: threeCandles, alt: 'Three Candles', id: 3, category: 'candle' },
+    { src: patternCandle, alt: 'Pattern Candle', id: 4, category: 'candle' },
+    { src: cakes, alt: 'Cakes', id: 5, category: 'food' },
+    { src: vaseAndGlass, alt: 'Vase and Glass', id: 6, category: 'vase' },
+    { src: flowers, alt: 'Flowers', id: 7, category: 'flower' },
+    { src: butterflyVase, alt: 'Butterfly Vase', id: 8, category: 'vase' },
+    { src: pinkTeaSet, alt: 'Pink Tea Set', id: 9, category: 'teaware' },
+    { src: dessertPlate, alt: 'Dessert Plate', id: 10, category: 'food' },
+    { src: yellowNoodles, alt: 'Yellow Noodles', id: 11, category: 'food' },
+    { src: orangeNoodles, alt: 'Orange Noodles', id: 12, category: 'food' },
+    { src: strawberry, alt: 'Strawberry', id: 13, category: 'food' }
   ];
   
   const handleTableClick = (e) => {
@@ -196,6 +239,33 @@ const AltarPage = () => {
     setShowPopup(true);
   };
   
+  const saveNewItem = async (newItem) => {
+    try {
+      // For testing, use a hardcoded userId that matches our fake data
+      const testUserId = "user123"; // In production, this would be currentUser.uid
+      
+      // Format item for saving to our "backend"
+      const itemToSave = {
+        id: newItem.id, // This is now a number
+        uniqueId: newItem.uniqueId,
+        category: newItem.category,
+        position: {
+          left: newItem.style.left,
+          top: newItem.style.top
+        }
+      };
+      
+      console.log('Saving item with numeric ID:', itemToSave.id);
+      
+      // Save the item
+      await saveAltarItem(testUserId, itemToSave);
+      console.log('Item saved successfully:', itemToSave);
+    } catch (err) {
+      console.error('Error saving item:', err);
+      // We'll still show the item locally even if saving fails
+    }
+  };
+  
   const handleConfirmSacrifice = async () => {
     // Close the popup
     setShowPopup(false);
@@ -209,15 +279,21 @@ const AltarPage = () => {
     // Get a random item
     const randomItem = items[Math.floor(Math.random() * items.length)];
     
-    // Add the new item to the array with position info
-    setRandomItems([...randomItems, {
+    // Create the new item with position info
+    const newItem = {
       ...randomItem,
-      uniqueId: Date.now(), // unique id for React key
+      uniqueId: Date.now().toString(), // unique id for React key
       style: {
         left: `${(clickPosition.x / clickPosition.tableRect.width) * 100}%`,
         top: `${(clickPosition.y / clickPosition.tableRect.height) * 100}%`
       }
-    }]);
+    };
+    
+    // Add the new item to the array
+    setRandomItems([...randomItems, newItem]);
+    
+    // Save the item to our "backend"
+    saveNewItem(newItem);
   };
   
   const handleCancelSacrifice = () => {
@@ -232,11 +308,6 @@ const AltarPage = () => {
           {error && <p className="error">{error}</p>}
         </div>
         
-        {/* Log the current balance state for debugging */}
-        <div style={{ display: 'none' }}>
-          {console.log('Current balance state:', balance)}
-        </div>
-        
         <div className="altar-background">
           <div className="praying-figures-left">
             <img src={prayingLeft} alt="Praying figures left" className="praying-left" />
@@ -248,16 +319,19 @@ const AltarPage = () => {
             <img src={eyesTree} alt="Eyes tree" className="eyes-tree" />
           </div>
           <div className="altar-table" onClick={handleTableClick}>
-            {/* Display all the random items that have been added */}
-            {randomItems.map((item) => (
-              <div 
-                key={item.uniqueId}
-                className={`random-item item-${item.category}`}
-                style={item.style}
-              >
-                <img src={item.src} alt={item.alt} />
-              </div>
-            ))}
+            {isLoading ? (
+              <div className="loading-indicator">Loading items...</div>
+            ) : (
+              randomItems.map((item) => (
+                <div 
+                  key={item.uniqueId}
+                  className={`random-item item-${item.category}`}
+                  style={item.style}
+                >
+                  <img src={item.src} alt={item.alt} />
+                </div>
+              ))
+            )}
           </div>
         </div>
         
