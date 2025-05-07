@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import altarBg from '../assets/altar/altar_bg.png';
 import candleImg from '../assets/altar/candle.png';
 import '../TemplePages/CandleStyles.css';
+import { Link } from 'react-router-dom';
 
 const CandlePage = () => {
   const [isLit, setIsLit] = useState(false);
@@ -44,6 +45,9 @@ const CandlePage = () => {
 
   return (
     <div className={`candle-altar ${isLit ? 'altar-lit' : 'altar-dark'}`}>
+      <Link to="/temple" className="back-button">
+        ← Back to Temple
+      </Link>
       <div className="altar-container">
         <img src={altarBg} alt="Altar Background" className="altar-background" />
         
