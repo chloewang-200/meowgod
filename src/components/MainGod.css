@@ -13,15 +13,15 @@
     overflow-x: hidden;
     background: linear-gradient(
         90deg,
-        #9c8669c4,
-        #161F63,
-        #161F63,        
-        #161F63,
-        #161F63,
-        #9c8669ae
+        #F8EFD6,
+        #e2bab1,
+        #e2bab1,        
+        #e2bab1,
+        #e2bab1,
+        #F8EFD6
     );
     background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
+    animation: gradientBG 8s ease infinite;
     overflow: hidden;
 }
 
