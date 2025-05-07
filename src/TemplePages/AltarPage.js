@@ -6,6 +6,7 @@ import eyesTree from '../assets/altar/eyes_tree.png';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserAltarItems, saveAltarItem, formatItemForDisplay, deleteAltarItem } from './altarItemsUtil';
 import TreeEyes from '../TreeEyes';
+import { Link } from 'react-router-dom';
 
 // Import WebFont for Google Fonts
 import WebFont from 'webfontloader';
@@ -361,6 +362,9 @@ const AltarPage = () => {
         </div>
       ) : (
         <div className="altar-container">
+          <Link to="/temple" className="back-button">
+          ← Back to Temple
+          </Link>
           <div className="balance-box">
             <p>Balance: {balance !== null ? balance : "Loading..."}</p>
             {error && <p className="error">{error}</p>}
