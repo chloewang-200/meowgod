@@ -4,7 +4,7 @@ import prayingLeft from '../assets/altar/praying_left.png';
 import prayingRight from '../assets/altar/praying_right.png';
 import eyesTree from '../assets/altar/eyes_tree.png';
 import { useAuth } from '../contexts/AuthContext';
-import { getUserAltarItems, saveAltarItem, formatItemForDisplay } from './altarItemsUtil';
+import { getUserAltarItems, saveAltarItem, formatItemForDisplay, deleteAltarItem } from './altarItemsUtil';
 import TreeEyes from '../TreeEyes';
 
 // Import WebFont for Google Fonts
@@ -30,6 +30,8 @@ const AltarPage = () => {
   const [balance, setBalance] = useState(null);
   const [error, setError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0, tableRect: null });
   const [isLoading, setIsLoading] = useState(true);
   const [isScreenTooSmall, setIsScreenTooSmall] = useState(false);
@@ -318,6 +320,37 @@ const AltarPage = () => {
     setShowPopup(false);
   };
 
+  const handleItemClick = async (e, item) => {
+    // Stop the event from bubbling up to the table
+    e.stopPropagation();
+    
+    // Show delete confirmation popup
+    setItemToDelete(item);
+    setShowDeletePopup(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      // Delete the item from the backend
+      await deleteAltarItem(currentUser, itemToDelete.uniqueId);
+      
+      // Update local state to remove the item
+      setRandomItems(prevItems => prevItems.filter(i => i.uniqueId !== itemToDelete.uniqueId));
+      
+      // Close the popup
+      setShowDeletePopup(false);
+      setItemToDelete(null);
+    } catch (err) {
+      console.error('Error deleting item:', err);
+      setError('Failed to delete item');
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeletePopup(false);
+    setItemToDelete(null);
+  };
+
   return (
     <div className="altar-wrapper">
       {isScreenTooSmall ? (
@@ -349,10 +382,11 @@ const AltarPage = () => {
                 <div className="loading-indicator">Loading items...</div>
               ) : (
                 randomItems.map((item) => (
-                  <div 
+                  <div
                     key={item.uniqueId}
                     className={`random-item item-${item.category}`}
                     style={item.style}
+                    onClick={(e) => handleItemClick(e, item)}
                   >
                     <img src={item.src} alt={item.alt} />
                   </div>
@@ -361,7 +395,21 @@ const AltarPage = () => {
             </div>
           </div>
           
-          {/* Confirmation Popup */}
+          {/* Delete Confirmation Popup */}
+          {showDeletePopup && (
+            <div className="sacrifice-popup-overlay">
+              <div className="sacrifice-popup">
+                <h3>Confirm Delete</h3>
+                <p>Are you sure you want to remove this offering?</p>
+                <div className="popup-buttons">
+                  <button className="cancel-button" onClick={handleCancelDelete}>Cancel</button>
+                  <button className="confirm-button" onClick={handleConfirmDelete}>Delete</button>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {/* Existing Sacrifice Popup */}
           {showPopup && (
             <div className="sacrifice-popup-overlay">
               <div className="sacrifice-popup">

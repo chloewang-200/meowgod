@@ -55,6 +55,32 @@ export const saveAltarItem = async (currentUser, itemData) => {
   }
 };
 
+// Function to delete an altar item
+export const deleteAltarItem = async (currentUser, uniqueId) => {
+  try {
+    const idToken = await currentUser.getIdToken();
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'https://meow-god-backend-717901323721.us-central1.run.app'}/altar/items/${uniqueId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${idToken}`,
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'omit'
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to delete altar item: ${response.status} - ${errorText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting altar item:', error);
+    throw error;
+  }
+};
+
 // Helper to format item data for the UI
 export const formatItemForDisplay = (item) => {
   return {
