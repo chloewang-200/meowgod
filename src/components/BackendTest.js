@@ -9,8 +9,8 @@ const BackendTest = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
-
+  const BACKEND_URL = 'https://meow-god-backend-717901323721.us-central1.run.app';
+  // const BACKEND_URL = 'http://127.0.0.1:5000'
   const getBalance = async () => {
     try {
       // Force refresh the token

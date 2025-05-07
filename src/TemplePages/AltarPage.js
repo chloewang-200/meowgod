@@ -33,7 +33,9 @@ const AltarPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useAuth();
   
-  const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
+  // const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
+  // const BACKEND_URL = 'http://127.0.0.1:5000'
+  const BACKEND_URL = 'https://meow-god-backend-717901323721.us-central1.run.app';
   const SACRIFICE_COST = 100;
 
   // Initialize Google Fonts
@@ -57,11 +59,7 @@ const AltarPage = () => {
   const loadUserItems = async () => {
     try {
       setIsLoading(true);
-      // For testing, use a hardcoded userId that matches our fake data
-      // In production, this would use currentUser.uid
-      const testUserId = "user123"; // Change this to test different users
-      
-      const userItems = await getUserAltarItems(testUserId);
+      const userItems = await getUserAltarItems(currentUser);
       
       // Format items for display
       const formattedItems = userItems.map(item => {
@@ -241,13 +239,9 @@ const AltarPage = () => {
   
   const saveNewItem = async (newItem) => {
     try {
-      // For testing, use a hardcoded userId that matches our fake data
-      const testUserId = "user123"; // In production, this would be currentUser.uid
-      
-      // Format item for saving to our "backend"
+      // Format item for saving to backend
       const itemToSave = {
-        id: newItem.id, // This is now a number
-        uniqueId: newItem.uniqueId,
+        id: newItem.id,
         category: newItem.category,
         position: {
           left: newItem.style.left,
@@ -255,14 +249,16 @@ const AltarPage = () => {
         }
       };
       
-      console.log('Saving item with numeric ID:', itemToSave.id);
+      console.log('Saving item:', itemToSave);
       
-      // Save the item
-      await saveAltarItem(testUserId, itemToSave);
-      console.log('Item saved successfully:', itemToSave);
+      // Save the item using the API
+      const savedItem = await saveAltarItem(currentUser, itemToSave);
+      console.log('Item saved successfully:', savedItem);
     } catch (err) {
       console.error('Error saving item:', err);
-      // We'll still show the item locally even if saving fails
+      setError('Failed to save item');
+      // Remove the item from the local state if saving failed
+      setRandomItems(prevItems => prevItems.filter(item => item.uniqueId !== newItem.uniqueId));
     }
   };
   
