@@ -25,7 +25,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<CatchCoin />} /> */}
           {/* <Route path="/" element={<Cat />} /> */}
-          <Route path="/" element={<CatchCoin />} />
+          <Route path="/" element={<MarketingPage />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/marketing" element={<MarketingPage />} />
           <Route path="/temple" element={<ProtectedRoute><Temple /></ProtectedRoute>} />
