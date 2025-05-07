@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import EyeImage from './assets/tiger_eye.png';
+import EyeImage from './assets/tree_eye.png';
 import './tigerEyes.css';
 
 const TreeEyes = () => {
