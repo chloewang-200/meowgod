@@ -20,13 +20,13 @@ const Temple = () => {
       <div className="gods">
        
         <div className="side-god">
-          <Link to="/money2">
+          <Link to="/main">
             <img src={moneyGod} alt="Money God 2" />
           </Link>
         </div>
 
         <div className="god">
-          <Link to="/main">
+          <Link to="/altar">
             <img src={mainGod} alt="Main God" className="temple-main-god"/>
           </Link>
         </div>
