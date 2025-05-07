@@ -46,8 +46,8 @@ const TreeEyes = () => {
       });
       
       // Set max movement relative to container size
-      maxMove.current.x = rect.width * 0.006;  // 0.6% of container width
-      maxMove.current.y = rect.height * 0.006; // 0.6% of container height
+      maxMove.current.x = rect.width * 0.004;  // 0.4% of container width
+      maxMove.current.y = rect.height * 0.004; // 0.4% of container height
     };
 
     const handleMouseMove = (e) => {
@@ -88,15 +88,25 @@ const TreeEyes = () => {
       requestAnimationFrame(animate);
     };
 
-    // Initial setup
-    updateEyeCentersAndMaxMove();
-    
+    // Initialize with a small delay to ensure everything is rendered
+    const initialize = () => {
+      updateEyeCentersAndMaxMove();
+      // Set initial mouse position to center of container
+      const rect = container.getBoundingClientRect();
+      mousePos.current = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+      // Start animation
+      animate();
+    };
+
     // Add event listeners
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', updateEyeCentersAndMaxMove);
     
-    // Start animation
-    animate();
+    // Initialize after a short delay
+    setTimeout(initialize, 100);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
