@@ -10,15 +10,16 @@
     position: relative;
     overflow-y: auto; /* Make it scrollable */
     overflow-x: hidden;
-    background: linear-gradient(
+    background: 
+    linear-gradient(
         45deg,
-        #ff4db2cf,
-        #161F63,
-        #161F63,
-        #ff4db294
+        #F8EFD6,
+        #e2bab1,
+        #e2bab1,        
+        #F8EFD6
     );
     background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
+    animation: gradientBG 8s ease infinite;
     overflow: hidden;
 }
 

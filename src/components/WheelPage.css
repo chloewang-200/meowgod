@@ -10,7 +10,8 @@
     position: relative;
     overflow-y: auto; /* Make it scrollable */
     overflow-x: hidden;
-    background: linear-gradient(
+    background: #F8EFD6;
+    /* linear-gradient(
       45deg,
       #9C8669,
       #c68960,
@@ -18,7 +19,7 @@
       #152468,
       #c68960,
       #9C8669
-    );
+    ); */
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     background-size: contain;
@@ -43,7 +44,7 @@
       transparent 1px
     );
     background-size: 30px 30px;
-    animation: stars 20s linear infinite;
+    animation: stars 25s linear infinite;
     z-index: 0;
     pointer-events:none;
   }
