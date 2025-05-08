@@ -375,12 +375,12 @@
   border: none;
   padding: 10px 25px;
   border-radius: 25px;
-  color: #F8EFD6;
+  color: #EA7348;
   font-size: 14px;
   font-family: 'Protest Revolution';
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #EA7348;
 }
 
 .close-button:hover {

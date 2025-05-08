@@ -314,10 +314,11 @@ h1 span {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    color: #E95A21;
 }
 
 .result-popup h2 {
-    color: #F8EFD6;
+    color: #E95A21;
     font-size: 18px;
     margin-bottom: 30px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -327,16 +328,18 @@ h1 span {
 
 .result-popup.winner {
     background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: #E95A21;
     box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
     border-radius: 25px;
+    color: #E95A21;
 }
 
 .result-popup.loser {
     background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: #E95A21;
     box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
     border-radius: 25px;
+    color: #E95A21;
 }
 
 .result-popup .bttn-jelly {
@@ -365,7 +368,7 @@ h1 span {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(5px);
     z-index: -1;
     animation: fadeIn 0.5s ease-out;
@@ -395,7 +398,6 @@ h1 span {
     max-height: 100%;
     object-fit: contain;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .winner .result-image {

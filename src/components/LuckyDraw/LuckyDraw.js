@@ -26,7 +26,8 @@ class LuckyDraw extends Component {
     ArabicLabel: PropTypes.bool,
     onSuccessDrawReturn: PropTypes.func,
     onOutLimitAlert: PropTypes.func,
-    rotateSecond: PropTypes.number
+    rotateSecond: PropTypes.number,
+    onBeforeDraw: PropTypes.func
   };
   static defaultProps = {
     width: 500,
@@ -74,11 +75,19 @@ class LuckyDraw extends Component {
     return totalAngle;
   }
 
-  _processDrawing(e) {
+  async _processDrawing(e) {
     e.preventDefault();
     if (!this.state.rolling) {
       let drawTime = this.state.drawTimes;
       if (!this.props.drawLimitSwitch || drawTime <= this.props.drawLimit) {
+        // Check with onBeforeDraw first
+        if (this.props.onBeforeDraw) {
+          const canProceed = await this.props.onBeforeDraw();
+          if (!canProceed) {
+            return; // Don't proceed if onBeforeDraw returns false
+          }
+        }
+
         // Get the random number directly
         const randomNumber = this._processRandomNumber(0, this.props.range - 1);
         
