@@ -407,26 +407,148 @@ h1 span {
     to { transform: translateY(-10px); }
 }
 
-.balance-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 10;
+/* Balance box styles */
+
+/* Balance box styles */
+.balance-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  padding: 6px 8px;
+  z-index: 100;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Protest Revolution', sans-serif;
+  text-align: center;
+  /* Create a spiky elliptical shape using radial-gradient */
+  background: radial-gradient(ellipse at center, #E95A21 60%, transparent 60.5%);
+  width: 120px;
+  height: 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Add the spikes with pseudo-element */
+  position: absolute;
+  transform: translate(0, 0);
 }
 
-.balance-container h3 {
-    margin: 0;
-    color: #333;
+.balance-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: #FF4DB1;
+  /* Create spikes using clip-path with many points */
+  clip-path: polygon(
+    50% 0%, 52% 5%, 55% 0%, 58% 5%, 61% 0%, 64% 5%, 67% 0%, 70% 5%, 73% 0%, 76% 5%, 79% 0%, 82% 5%, 85% 0%, 88% 5%, 91% 0%, 94% 5%, 97% 0%, 100% 5%,
+    100% 7%, 95% 10%, 100% 13%, 95% 16%, 100% 19%, 95% 22%, 100% 25%, 95% 28%, 100% 31%, 95% 34%, 100% 37%, 95% 40%, 100% 43%, 95% 46%, 100% 49%,
+    95% 52%, 100% 55%, 95% 58%, 100% 61%, 95% 64%, 100% 67%, 95% 70%, 100% 73%, 95% 76%, 100% 79%, 95% 82%, 100% 85%, 95% 88%, 100% 91%, 95% 94%, 100% 97%,
+    95% 100%, 92% 95%, 89% 100%, 86% 95%, 83% 100%, 80% 95%, 77% 100%, 74% 95%, 71% 100%, 68% 95%, 65% 100%, 62% 95%, 59% 100%, 56% 95%, 53% 100%, 50% 95%,
+    47% 100%, 44% 95%, 41% 100%, 38% 95%, 35% 100%, 32% 95%, 29% 100%, 26% 95%, 23% 100%, 20% 95%, 17% 100%, 14% 95%, 11% 100%, 8% 95%, 5% 100%, 0% 95%,
+    0% 93%, 5% 90%, 0% 87%, 5% 84%, 0% 81%, 5% 78%, 0% 75%, 5% 72%, 0% 69%, 5% 66%, 0% 63%, 5% 60%, 0% 57%, 5% 54%, 0% 51%,
+    5% 48%, 0% 45%, 5% 42%, 0% 39%, 5% 36%, 0% 33%, 5% 30%, 0% 27%, 5% 24%, 0% 21%, 5% 18%, 0% 15%, 5% 12%, 0% 9%, 5% 6%, 0% 3%, 3% 0%,
+    6% 5%, 9% 0%, 12% 5%, 15% 0%, 18% 5%, 21% 0%, 24% 5%, 27% 0%, 30% 5%, 33% 0%, 36% 5%, 39% 0%, 42% 5%, 45% 0%, 48% 5%
+  );
+}
+
+.balance-box h3 {
+  margin: 5px 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 1;
+  font-family: 'Protest Revolution', sans-serif;
+}
+
+.balance-box .error {
+  color: #FF4DB1;
+  font-size: 12px;
+  margin-top: 3px;
+  text-shadow: 0 0 2px #000;
 }
 
 .error-message {
-    color: #ff0000;
+    color: #FF4DB1;
     margin: 5px 0 0;
     font-size: 14px;
 }
 
 
+
+/* Styles for the sacrifice confirmation popup */
+.sacrifice-popup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.sacrifice-popup {
+  background: #000;
+  border: 2px solid #FF4DB1;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  color: #fff;
+  font-family: 'Protest Revolution', sans-serif;
+  position: relative;
+  box-shadow: 0 0 20px rgba(233, 90, 33, 0.6);
+}
+
+.sacrifice-popup h3 {
+  color: #FF4DB1;
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.sacrifice-popup p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.popup-buttons button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Protest Revolution', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button {
+  background-color: #333;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #555;
+}
+
+.confirm-button {
+  background-color: #FF4DB1;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #FF4DB1;
+  box-shadow: 0 0 10px rgba(233, 90, 33, 0.8);
+}

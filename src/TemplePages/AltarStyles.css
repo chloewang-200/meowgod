@@ -70,7 +70,7 @@ html, body {
   top: 20px;
   right: 20px;
   color: #fff;
-  padding: 8px 10px;
+  padding: 6px 8px;
   z-index: 100;
   font-size: 14px;
   font-weight: bold;
@@ -78,8 +78,8 @@ html, body {
   text-align: center;
   /* Create a spiky elliptical shape using radial-gradient */
   background: radial-gradient(ellipse at center, #E95A21 60%, transparent 60.5%);
-  width: 160px;
-  height: 65px;
+  width: 120px;
+  height: 55px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -416,27 +416,30 @@ html, body {
 .tree-eyes-container .eye-12 { top: 2.5%; left: 35%; }
 
 .back-button {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: 30px;
   left: 20px;
-  padding: 15px 15px;
-  min-width: 160px;
-  background-color: rgba(0, 0, 0, 0.7);
+  width: 100px;
+  text-align: center;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 10px;
   color: #E95A21;
   text-decoration: none;
-  border: 1px solid #E95A21;
-  border-radius: 3px;
-  font-family: 'Protest Revolution', sans-serif;
-  font-size: 0.9em;
-  transition: all 0.3s ease;
+  font-size: 16px;
+  font-family: 'Protest Revolution';
   z-index: 1000;
-  text-align: center;
-  white-space: nowrap;
+  transition: all 0.3s ease;
+  overflow: hidden; /* Add this */
+  border: 0.1px solid #E95A21;
 }
 
 .back-button:hover {
-  background-color: #E95A21;
-  color: #000;
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(233, 90, 33, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  border-radius: 10px; /* Ensure hover state maintains border-radius */
+  color: #E95A21;
 }

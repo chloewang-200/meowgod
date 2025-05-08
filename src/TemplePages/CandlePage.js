@@ -46,7 +46,7 @@ const CandlePage = () => {
   return (
     <div className={`candle-altar ${isLit ? 'altar-lit' : 'altar-dark'}`}>
       <Link to="/temple" className="back-button">
-        ← Back to Temple
+        ← Back
       </Link>
       <div className="altar-container">
         <img src={altarBg} alt="Altar Background" className="altar-background" />

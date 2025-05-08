@@ -1,7 +1,7 @@
 import React from 'react';
 import NavigationButton from '../components/NavigationButton';
 import '../components/MainGod.css';
-import mainGod from '../assets/main-god.png';
+import moneyGod from '../assets/money-god.png';
 import rightmoon from '../assets/redMoon.png';
 import leftmoon from '../assets/whiteMoon.png';
 import lefthill from '../assets/lefthill.png';
@@ -16,7 +16,7 @@ const MainGodPage = () => (
       </NavigationButton>
     </div>
     <div className="main-god-container">
-      <img src={mainGod} alt="main-god" className="main-god" />
+      <img src={moneyGod} alt="main-god" className="main-god" />
       <div className="maingod-decor-container">
       <img src={lefthill} alt="left-hill" className="maingod-decor left-hill" />
         <img src={rightpine} alt="right-pine" className="maingod-decor right-pine" />

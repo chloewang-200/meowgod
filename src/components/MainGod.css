@@ -61,14 +61,14 @@
 
 .main-god{
     position: absolute;
-    top: 20%;
-    left: 24%;
+    top: 15%;
+    left: 37%;
     align-items: center;
-    scale: 0.9;
     filter: drop-shadow(0 0 10px rgba(248, 239, 214, 0.8));
     z-index: 2;
     bottom: 200px;
     animation: floatmaingod 4s ease-in-out infinite;
+    scale: 1.15;
 }
 
 /* Animation for side images */

@@ -363,7 +363,7 @@ const AltarPage = () => {
       ) : (
         <div className="altar-container">
           <Link to="/temple" className="back-button">
-          ← Back to Temple
+          ← Back
           </Link>
           <div className="balance-box">
             <p>Balance: {balance !== null ? balance : "Loading..."}</p>
