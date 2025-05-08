@@ -10,7 +10,7 @@
     position: relative;
     overflow-y: auto; /* Make it scrollable */
     overflow-x: hidden;
-    background: #F8EFD6;
+    background: #e2bab1;
     /* linear-gradient(
       45deg,
       #9C8669,
@@ -185,6 +185,7 @@
 .prize-display h2 {
   margin: 0;
   font-size: 1.4em;
+  font-family: 'Protest Revolution';
   color: #950000;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
@@ -208,6 +209,7 @@
 
 .prize-text {
   font-size: 1em;
+  font-family: 'Protest Revolution';
   font-weight: 600;
   text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
   font-weight: bold;
@@ -355,6 +357,7 @@
 .limit-alert h2 {
   margin: 0 0 15px 0;
   font-size: 18px;
+  font-family: 'Protest Revolution';
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   color: #F8EFD6;
 }
@@ -362,6 +365,7 @@
 .limit-alert p {
   margin: 0 0 20px 0;
   font-size: 14px;
+  font-family: 'Protest Revolution';
   opacity: 0.9;
   color: #F8EFD6;
 }
@@ -373,6 +377,7 @@
   border-radius: 25px;
   color: #F8EFD6;
   font-size: 14px;
+  font-family: 'Protest Revolution';
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid rgba(255, 255, 255, 0.1);

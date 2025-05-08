@@ -17,6 +17,7 @@ import winningCat from '../assets/winning-cat.png';
 import losingCat1 from '../assets/losing-cat1.png';
 import losingCat2 from '../assets/losing-cat2.png';
 import losingCat3 from '../assets/losing-cat3.png';
+import { useAuth } from '../contexts/AuthContext';
 
 const ICON_HEIGHT = 188;
 const LOSER_IMAGES = [
@@ -154,11 +155,131 @@ const ResultPopup = ({ winner, onClose }) => {
     );
 };
 
-const SlotMachine = () => {
+const SlotMachine = ({ onPlayAttempt, onWin }) => {
+    const { currentUser } = useAuth();
     const [winner, setWinner] = useState(null);
     const [matches, setMatches] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const spinnerRefs = useRef([null, null, null]);
+    const [balance, setBalance] = useState(null);
+    const [error, setError] = useState('');
+    const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
+
+    // Function to fetch balance
+    const getBalance = async () => {
+        try {
+            const idToken = await currentUser.getIdToken(true);
+            const response = await fetch(`${BACKEND_URL}/balance`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch balance`);
+            }
+
+            const data = await response.json();
+            setBalance(data.balance);
+            setError('');
+        } catch (err) {
+            console.error('Error fetching balance:', err);
+            setError('Failed to load balance');
+        }
+    };
+
+    // Function to deduct balance when playing
+    const deductBalance = async (amount) => {
+        try {
+            // Force refresh the token to ensure it's not expired
+            const idToken = await currentUser.getIdToken(true);
+            console.log('Making deduct request with token:', idToken.substring(0, 20) + '...'); // Log token for debugging
+
+            const response = await fetch(`${BACKEND_URL}/balance/deduct`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'include',
+                body: JSON.stringify({ amount: amount })
+            });
+
+            // Log the response for debugging
+            console.log('Deduct response status:', response.status);
+            const responseText = await response.text();
+            console.log('Deduct response text:', responseText);
+
+            if (!response.ok) {
+                if (response.status === 401) {
+                    throw new Error('Authentication failed. Please try logging in again.');
+                }
+                throw new Error(`Failed to deduct balance: ${responseText}`);
+            }
+
+            const data = JSON.parse(responseText);
+            getBalance(); // Refresh balance after deduction
+            return true;
+        } catch (err) {
+            console.error('Error deducting balance:', err);
+            setError(err.message || 'Failed to deduct balance');
+            return false;
+        }
+    };
+
+    // Function to add balance when winning
+    const addBalance = async (amount) => {
+        try {
+            const idToken = await currentUser.getIdToken();
+            const response = await fetch(`${BACKEND_URL}/balance/add`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'include',
+                body: JSON.stringify({ amount: amount })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add balance`);
+            }
+
+            await response.json();
+            getBalance(); // Refresh balance after addition
+        } catch (err) {
+            console.error('Error adding balance:', err);
+            setError('Failed to add balance');
+        }
+    };
+
+    // Fetch balance when component mounts
+    useEffect(() => {
+        getBalance();
+    }, []);
+
+    // Modify the SlotMachine component to handle balance
+    const handlePlay = async () => {
+        const playingCost = 10; // Set your desired cost to play
+        try {
+            await deductBalance(playingCost);
+            return true; // Return true if deduction successful
+        } catch (err) {
+            setError('Insufficient balance');
+            return false;
+        }
+    };
+
+    const handleWin = async () => {
+        const winningAmount = 30; // Set your desired winning amount
+        await addBalance(winningAmount);
+    };
 
     const handleFinish = (value) => {
         setMatches((prev) => {
@@ -167,6 +288,9 @@ const SlotMachine = () => {
                 const first = newMatches[0];
                 const results = newMatches.every((match) => match === first);
                 setWinner(results);
+                if (results) {
+                    onWin(); // Call onWin when player wins
+                }
                 setTimeout(() => {
                     setShowPopup(true);
                 }, 800);
@@ -175,12 +299,38 @@ const SlotMachine = () => {
         });
     };
 
-    const handleClick = () => {
-        setWinner(null);
-        setMatches([]);
-        setShowPopup(false);
-        spinnerRefs.current.forEach((spinner) => spinner?.reset());
+    const handleClick = async () => {
+        if (!currentUser) {
+            setError('Please log in to play');
+            return;
+        }
+
+        try {
+            // Check if player can afford to play
+            const canPlay = await handlePlay();
+            if (!canPlay) {
+                return; // Don't start the game if player can't afford it
+            }
+
+            setWinner(null);
+            setMatches([]);
+            setShowPopup(false);
+            spinnerRefs.current.forEach((spinner) => spinner?.reset());
+        } catch (err) {
+            console.error('Error starting game:', err);
+            setError('Failed to start game. Please try again.');
+        }
     };
+
+    useEffect(() => {
+        console.log('Current user:', currentUser);
+        if (currentUser) {
+            console.log('User ID:', currentUser.uid);
+            currentUser.getIdToken().then(token => {
+                console.log('Token available:', !!token);
+            });
+        }
+    }, [currentUser]);
 
     return (
         <div>
@@ -235,13 +385,155 @@ const SlotMachine = () => {
 };
 
 // Replace the simple SlotMachinePage with one that uses the SlotMachine component
-const SlotMachinePage = () => (
-    <div className="slot-machine-page">
-        <Link to="/NFT" className="back-button">
-            ← Back
-        </Link>
-        <SlotMachine />
-    </div>
-);
+const SlotMachinePage = () => {
+    const { currentUser } = useAuth();
+    const [balance, setBalance] = useState(null);
+    const [error, setError] = useState('');
+    const BACKEND_URL = 'https://flask-api-717901323721.us-central1.run.app';
+
+    // Function to fetch balance
+    const getBalance = async () => {
+        try {
+            const idToken = await currentUser.getIdToken(true);
+            const response = await fetch(`${BACKEND_URL}/balance`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch balance`);
+            }
+
+            const data = await response.json();
+            setBalance(data.balance);
+            setError('');
+        } catch (err) {
+            console.error('Error fetching balance:', err);
+            setError('Failed to load balance');
+        }
+    };
+
+    // Function to deduct balance when playing
+    const deductBalance = async (amount) => {
+        try {
+            // Force refresh the token to ensure it's not expired
+            const idToken = await currentUser.getIdToken(true);
+            console.log('Making deduct request with token:', idToken.substring(0, 20) + '...'); // Log token for debugging
+
+            const response = await fetch(`${BACKEND_URL}/balance/deduct`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'include',
+                body: JSON.stringify({ amount: amount })
+            });
+
+            // Log the response for debugging
+            console.log('Deduct response status:', response.status);
+            const responseText = await response.text();
+            console.log('Deduct response text:', responseText);
+
+            if (!response.ok) {
+                if (response.status === 401) {
+                    throw new Error('Authentication failed. Please try logging in again.');
+                }
+                throw new Error(`Failed to deduct balance: ${responseText}`);
+            }
+
+            const data = JSON.parse(responseText);
+            getBalance(); // Refresh balance after deduction
+            return true;
+        } catch (err) {
+            console.error('Error deducting balance:', err);
+            setError(err.message || 'Failed to deduct balance');
+            return false;
+        }
+    };
+
+    // Function to add balance when winning
+    const addBalance = async (amount) => {
+        try {
+            const idToken = await currentUser.getIdToken();
+            const response = await fetch(`${BACKEND_URL}/balance/add`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'include',
+                body: JSON.stringify({ amount: amount })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add balance`);
+            }
+
+            await response.json();
+            getBalance(); // Refresh balance after addition
+        } catch (err) {
+            console.error('Error adding balance:', err);
+            setError('Failed to add balance');
+        }
+    };
+
+    // Fetch balance when component mounts
+    useEffect(() => {
+        if (currentUser) {
+            getBalance();
+        } else {
+            setError('Please log in to view balance');
+        }
+    }, [currentUser]);
+
+    // Modify the SlotMachine component to handle balance
+    const handlePlay = async () => {
+        const playingCost = 10; // Set your desired cost to play
+        try {
+            await deductBalance(playingCost);
+            return true; // Return true if deduction successful
+        } catch (err) {
+            setError('Insufficient balance');
+            return false;
+        }
+    };
+
+    const handleWin = async () => {
+        const winningAmount = 30; // Set your desired winning amount
+        await addBalance(winningAmount);
+    };
+
+    return (
+        <div className="slot-machine-page">
+            <Link to="/NFT" className="back-button">
+                ← Back
+            </Link>
+            
+            {/* Add balance display */}
+            <div className="balance-container">
+                {currentUser ? (
+                    <h3>Balance: {balance !== null ? `${balance} coins` : 'Loading...'}</h3>
+                ) : (
+                    <h3>Please log in to play</h3>
+                )}
+                {error && <p className="error-message">{error}</p>}
+            </div>
+
+            {/* Pass balance handling to SlotMachine */}
+            <SlotMachine 
+                onPlayAttempt={handlePlay}
+                onWin={handleWin}
+            />
+        </div>
+    );
+};
 
 export default SlotMachinePage;

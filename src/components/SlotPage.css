@@ -407,4 +407,26 @@ h1 span {
     to { transform: translateY(-10px); }
 }
 
+.balance-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.balance-container h3 {
+    margin: 0;
+    color: #333;
+}
+
+.error-message {
+    color: #ff0000;
+    margin: 5px 0 0;
+    font-size: 14px;
+}
+
 

@@ -15,7 +15,8 @@ class Wheel extends Component {
     textArray: PropTypes.array,
     fontColor: PropTypes.string,
     fontSize: PropTypes.string,
-    writingModel: PropTypes.string
+    writingModel: PropTypes.string,
+    fontFamily: PropTypes.string
   };
   
   static defaultProps = {};
@@ -66,6 +67,7 @@ class Wheel extends Component {
           fontColor={props.fontColor}
           fontSize={props.fontSize}
           writingModel={props.writingModel}
+          fontFamily={props.fontFamily}
         />
       );
     });

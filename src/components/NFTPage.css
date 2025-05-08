@@ -13,10 +13,10 @@
     background: 
     linear-gradient(
         45deg,
-        #F8EFD6,
         #e2bab1,
-        #e2bab1,        
-        #F8EFD6
+        #F8EFD6,
+        #F8EFD6,
+        #e2bab1
     );
     background-size: 400% 400%;
     animation: gradientBG 8s ease infinite;

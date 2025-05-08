@@ -64,6 +64,7 @@ const WheelPage = () => {
             onOutLimitAlert={handleLimitExceeded}
             rotateSecond={5}
             showInnerLabels={true}
+            fontFamily="Protest Revolution"
           />
           <div className="side-image left-bottom">
             <img src={sideImage3} alt="decoration" />

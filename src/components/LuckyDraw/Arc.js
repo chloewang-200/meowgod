@@ -14,7 +14,8 @@ class Arc extends Component {
     stoke: PropTypes.number,
     fontColor: PropTypes.string,
     fontSize: PropTypes.string,
-    writingModel: PropTypes.string
+    writingModel: PropTypes.string,
+    fontFamily: PropTypes.string
   };
 
   render() {
@@ -75,7 +76,8 @@ class Arc extends Component {
               fontWeight: 'bold',
               transform: 'rotate(0deg)',
               letterSpacing: '0.5px',
-              dominantBaseline: 'middle'
+              dominantBaseline: 'middle',
+              fontFamily: props.fontFamily
             }}
           >
             {props.text}
