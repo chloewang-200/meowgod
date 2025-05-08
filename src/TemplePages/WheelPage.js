@@ -20,16 +20,7 @@ const WheelPage = () => {
   const BACKEND_URL = 'https://meow-god-backend-717901323721.us-central1.run.app';
   const SPIN_COST = 10; // Cost to spin the wheel
 
-  // const prizes = [
-  //   "1000 🪙",
-  //   "Mystery 📦",
-  //   "Special 🐯",
-  //   "500 💰",
-  //   "Rare 💎",
-  //   "100 🌟",
-  //   "Gift 🎁",
-  //   "Bye 🎲"
-  // ];
+
   const prizes = [
     "👹 1000",
     "💎 500",
