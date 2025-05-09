@@ -17,6 +17,7 @@ import Homepage from './HomePage';
 import MarketingPage from './MarketingPage';
 import { AuthProvider } from './contexts/AuthContext';
 import BackendTest from './components/BackendTest';
+import LoginTestPage from './pages/LoginTestPage';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Slot" element={<ProtectedRoute><SlotMachinePage /></ProtectedRoute>} />
           <Route path="/test" element={<ProtectedRoute><BackendTest /></ProtectedRoute>} />
           <Route path="/altar" element={<ProtectedRoute><AltarPage /></ProtectedRoute>} />
+          <Route path="/login-test" element={<LoginTestPage />} />
         </Routes>
       </Router>
     </AuthProvider>
