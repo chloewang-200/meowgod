@@ -48,6 +48,33 @@ const LoginBox = () => {
     }
   };
 
+  const addInitialBalance = async (user) => {
+    try {
+      const idToken = await user.getIdToken(true);
+      const response = await fetch(`${BACKEND_URL}/balance/add`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'omit',
+        body: JSON.stringify({ amount: 1000 })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add initial balance');
+      }
+
+      const data = await response.json();
+      console.log("Initial balance added:", data.message);
+      return true;
+    } catch (err) {
+      console.error('Error adding initial balance:', err);
+      return false;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -56,8 +83,19 @@ const LoginBox = () => {
       if (isSignUp) {
         // Sign up
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const balance = await getBalance(userCredential.user);
-        console.log('Initial balance for new user:', balance);
+        const user = userCredential.user;
+        
+        // Add initial balance of 1000
+        const balanceAdded = await addInitialBalance(user);
+        if (balanceAdded) {
+          console.log('Added initial balance of 1000');
+        }
+        
+        // Get and log final balance
+        const balance = await getBalance(user);
+        console.log('Final balance after signup:', balance);
+        
+        alert('✅ Signed up! You received 1000 coins as a welcome bonus!');
       } else {
         // Sign in
         try {
@@ -98,8 +136,16 @@ const LoginBox = () => {
       const user = result.user;
       console.log('Google login successful for:', user.email);
   
+      // Check if this is a new user
       const balance = await getBalance(user);
-      console.log('Initial balance after Google login:', balance);
+      if (balance === 0) {
+        // Add initial balance for new Google users
+        const balanceAdded = await addInitialBalance(user);
+        if (balanceAdded) {
+          console.log('Added initial balance of 1000 for new Google user');
+          alert('Welcome! You received 1000 coins as a welcome bonus!');
+        }
+      }
   
       navigate('/temple');
     } catch (err) {
